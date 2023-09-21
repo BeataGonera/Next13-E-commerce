@@ -54,10 +54,13 @@ const productList: ProductListType = [
 
 export const ProductList = () => {
 	return (
-		<section className="grid grid-cols-4 gap-4">
+		<ul className="grid grid-cols-4 gap-4" data-testid="products-list">
 			{productList.map((product) => (
-				<ProductListItem product={product} key={product.id} />
+				<ProductListItem
+					product={product}
+					key={product.id}
+				/>
 			))}
-		</section>
+		</ul>
 	);
 };
