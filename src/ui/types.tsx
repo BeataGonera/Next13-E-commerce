@@ -1,11 +1,11 @@
-type ImageType = {
+export type ImageType = {
 	src: string;
 	alt: string;
 	width: number;
 	height: number;
 };
 
-type ProductType = {
+export type ProductType = {
 	id: number;
 	name: string;
 	category: string;
@@ -13,4 +13,4 @@ type ProductType = {
 	image: ImageType;
 };
 
-type _ProductListType = ProductType[];
+export type ProductListType = ProductType[];
