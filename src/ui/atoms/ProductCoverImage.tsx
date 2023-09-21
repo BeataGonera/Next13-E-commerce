@@ -1,4 +1,4 @@
-import { ProductType } from "../types";
+import type { ProductType } from "../types";
 
 type ProductCoverImageProps = {
 	product: ProductType;

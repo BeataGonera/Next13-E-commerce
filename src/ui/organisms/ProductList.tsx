@@ -1,5 +1,5 @@
 import { ProductListItem } from "../molecules/ProductListItem";
-import { ProductListType } from "../types";
+import type { ProductListType } from "../types";
 
 const productList: ProductListType = [
 	{
