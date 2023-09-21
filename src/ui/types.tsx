@@ -13,4 +13,4 @@ type ProductType = {
 	image: ImageType;
 };
 
-type ProductListType = ProductType[];
+type _ProductListType = ProductType[];
