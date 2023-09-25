@@ -1,9 +1,6 @@
-import ActiveLink from "@/ui/atoms/ActiveLink";
-import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
+import { ActiveLink } from "@/ui/atoms/ActiveLink";
 
 export const metadata: Metadata = {
 	title: "Sklep",
@@ -23,7 +20,7 @@ export default function RootLayout({
 							<ActiveLink href={"/"}>Home</ActiveLink>
 						</li>
 						<li>
-							<ActiveLink href={"/products"}>Produkty</ActiveLink>
+							<ActiveLink href={"/products"}>All</ActiveLink>
 						</li>
 					</ul>
 				</nav>

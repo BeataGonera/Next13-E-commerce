@@ -1,10 +1,10 @@
 "use client";
+import { type ReactNode } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
 
-const ActiveLink = ({
+export const ActiveLink = ({
 	href,
 	children,
 }: {
@@ -12,10 +12,12 @@ const ActiveLink = ({
 	children: ReactNode;
 }) => {
 	const currentPathname = usePathname();
+	const ariaCurrent = href === currentPathname ? "page" : undefined;
 	const isActive = href === currentPathname;
 	return (
 		<Link
 			href={href}
+			aria-current={ariaCurrent}
 			className={clsx(`text-blue-400 hover:text-blue-600`, {
 				underline: isActive,
 			})}
@@ -24,5 +26,3 @@ const ActiveLink = ({
 		</Link>
 	);
 };
-
-export default ActiveLink;

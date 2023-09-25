@@ -1,5 +1,3 @@
-import { ProductType } from "@/ui/types";
-
 type ProductsResponseItem = {
 	id: string;
 	title: string;
@@ -31,7 +29,8 @@ export const getProductById = async (id: string) => {
 		`https://naszsklep-api.vercel.app/api/products/${id}`,
 	);
 	const productResponse = (await res.json()) as ProductsResponseItem;
-	productsResponseItemToProductResponseType(productResponse);
+	console.log(productResponse);
+	return productsResponseItemToProductResponseType(productResponse);
 };
 
 const productsResponseItemToProductResponseType = (

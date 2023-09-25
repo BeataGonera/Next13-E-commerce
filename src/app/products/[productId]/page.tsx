@@ -1,23 +1,24 @@
-import { getProductById } from "@/api/products";
+import { getProductById, getProductsList } from "@/api/products";
+
+export const generateStaticParams = async () => {
+	const products = await getProductsList();
+	return products
+		.map((product) => {
+			productId: product.id;
+		})
+		.slice(0, 3);
+};
 
 export default async function singleProductPage({
-	params,
-} // searchParams,
-: {
+	params, // searchParams,
+}: {
 	params: { productId: string };
-	// searchParams: { [key: string]: string | string[] };
 }) {
-	const product = getProductById(params.productId);
-	// const referral = searchParams.referral.toString();
+	const product = await getProductById(params.productId);
 
 	return (
-		//div będzie w layoucie
 		<div>
-			<h1>Single product page</h1>
-			<p>{params.productId}</p>
-			{/* <p>{referral}</p> */}
-
-			{/* <SingleProductTemplate product = {product} /> */}
+			<h1>{product.name}</h1>
 		</div>
 	);
 }

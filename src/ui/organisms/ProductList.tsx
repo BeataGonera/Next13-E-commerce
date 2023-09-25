@@ -1,5 +1,5 @@
-import { getProductsList } from "@/api/products";
 import { ProductListItem } from "../molecules/ProductListItem";
+import { getProductsList } from "@/api/products";
 
 export const ProductList = async () => {
 	const productsList = await getProductsList();
