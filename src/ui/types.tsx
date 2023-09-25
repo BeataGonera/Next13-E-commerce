@@ -6,11 +6,17 @@ export type ImageType = {
 };
 
 export type ProductType = {
-	id: number;
+	id: string;
 	name: string;
 	category: string;
 	price: number;
 	image: ImageType;
+	description: string;
+	longDescription: string;
+	rating: {
+		rate: number;
+		count: number;
+	};
 };
 
 export type ProductListType = ProductType[];

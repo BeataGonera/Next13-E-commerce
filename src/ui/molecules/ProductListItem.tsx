@@ -4,7 +4,7 @@ import type { ProductType } from "../types";
 
 type ProductListItemProps = {
 	product: ProductType;
-	key: number;
+	key: string;
 };
 
 export const ProductListItem = ({

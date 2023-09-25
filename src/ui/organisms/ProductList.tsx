@@ -1,65 +1,16 @@
+import { getProductsList } from "@/api/products";
 import { ProductListItem } from "../molecules/ProductListItem";
-import type { ProductListType } from "../types";
 
-const productList: ProductListType = [
-	{
-		id: 1,
-		name: "Koszulka",
-		category: "men",
-		price: 1234,
-		image: {
-			src: "/koszulka.webp",
-			alt: "koszulka",
-			width: 300,
-			height: 300,
-		},
-	},
-	{
-		id: 1,
-		name: "Koszulka",
-		category: "men",
-		price: 1234,
-		image: {
-			src: "/koszulka.webp",
-			alt: "koszulka",
-			width: 300,
-			height: 300,
-		},
-	},
-	{
-		id: 1,
-		name: "Koszulka",
-		category: "men",
-		price: 1234,
-		image: {
-			src: "/koszulka.webp",
-			alt: "koszulka",
-			width: 300,
-			height: 300,
-		},
-	},
-	{
-		id: 1,
-		name: "Koszulka",
-		category: "men",
-		price: 1234,
-		image: {
-			src: "/koszulka.webp",
-			alt: "koszulka",
-			width: 300,
-			height: 300,
-		},
-	},
-];
+export const ProductList = async () => {
+	const productsList = await getProductsList();
 
-export const ProductList = () => {
 	return (
-		<ul className="grid grid-cols-4 gap-4" data-testid="products-list">
-			{productList.map((product) => (
-				<ProductListItem
-					product={product}
-					key={product.id}
-				/>
+		<ul
+			className="grid grid-cols-4 gap-4"
+			data-testid="products-list"
+		>
+			{productsList.map((product) => (
+				<ProductListItem product={product} key={product.id} />
 			))}
 		</ul>
 	);
