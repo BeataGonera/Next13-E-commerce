@@ -3,12 +3,13 @@ import { type ReactNode } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { type Route } from "next";
 
 export const ActiveLink = ({
 	href,
 	children,
 }: {
-	href: string;
+	href: Route;
 	children: ReactNode;
 }) => {
 	const currentPathname = usePathname();

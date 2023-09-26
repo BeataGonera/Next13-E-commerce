@@ -1,15 +1,20 @@
+import { type FC } from "react";
 import { ProductListItem } from "../molecules/ProductListItem";
-import { getProductsList } from "@/api/products";
+import { type ProductType, type ProductListType } from "../types";
 
-export const ProductList = async () => {
-	const productsList = await getProductsList();
+type ProductListPropsType = {
+	products: ProductListType;
+};
 
+export const ProductList: FC<ProductListPropsType> = async ({
+	products,
+}) => {
 	return (
 		<ul
 			className="grid grid-cols-4 gap-4"
 			data-testid="products-list"
 		>
-			{productsList.map((product) => (
+			{products.map((product: ProductType) => (
 				<ProductListItem product={product} key={product.id} />
 			))}
 		</ul>

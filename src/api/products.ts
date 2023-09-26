@@ -32,6 +32,24 @@ export const getProductById = async (id: string) => {
 	return productsResponseItemToProductResponseType(productResponse);
 };
 
+export const getProductsWithOffset = async (
+	productsPerPage: number,
+	activePage: number,
+) => {
+	const offset = productsPerPage * activePage;
+	const res = await fetch(
+		`https://naszsklep-api.vercel.app/api/products?take=${productsPerPage}&offset=${offset}`,
+	);
+	const productsResponse =
+		(await res.json()) as ProductsResponseItem[];
+
+	const products = productsResponse.map(
+		productsResponseItemToProductResponseType, // point-free
+	);
+
+	return products;
+};
+
 const productsResponseItemToProductResponseType = (
 	productResponse: ProductsResponseItem,
 ) => {

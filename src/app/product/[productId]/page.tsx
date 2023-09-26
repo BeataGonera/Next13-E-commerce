@@ -1,4 +1,4 @@
-import { getProductById, getProductsList } from "@/api/products";
+import { getProductById } from "@/api/products";
 
 export const generateMetadata = async ({
 	params,
@@ -17,15 +17,6 @@ export const generateMetadata = async ({
 			images: [product.image.src],
 		},
 	};
-};
-
-export const generateStaticParams = async () => {
-	const products = await getProductsList();
-	return products
-		.map((product) => {
-			productId: product.id;
-		})
-		.slice(0, 3);
 };
 
 export default async function singleProductPage({
