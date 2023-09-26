@@ -24,6 +24,19 @@
 			"@/ui": ["./src/components/*"]
 		}
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js", "__checks__/api.check.js", "__checks__/heartbeat.check.js", "__checks__/homepage.spec.js", "__checks__/custom.spec.js", "checkly.config.js"],
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		"tailwind.config.js",
+		"__checks__/api.check.js",
+		"__checks__/heartbeat.check.js",
+		"__checks__/homepage.spec.js",
+		"__checks__/custom.spec.js",
+		"checkly.config.js",
+		"src/app/(static-pages)/[filename]/regulamin.mdx",
+		"src/app/(static-pages)/[filename]/polityka-prywatnosci.mdx"
+	],
 	"exclude": ["node_modules"]
 }
