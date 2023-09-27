@@ -1,4 +1,6 @@
 import { getProductById } from "@/api/products";
+import { ProductDescription } from "@/ui/atoms/ProductDescription";
+import { ProductImage } from "@/ui/atoms/ProductImage";
 
 export const generateMetadata = async ({
 	params,
@@ -19,7 +21,7 @@ export const generateMetadata = async ({
 	};
 };
 
-export default async function singleProductPage({
+async function singleProductPage({
 	params, // searchParams,
 }: {
 	params: { productId: string };
@@ -27,8 +29,11 @@ export default async function singleProductPage({
 	const product = await getProductById(params.productId);
 
 	return (
-		<div>
-			<h1>{product.name}</h1>
-		</div>
+		<main className=" flex min-h-screen flex-col gap-12 px-4 py-12 md:grid md:grid-cols-2 md:px-24 lg:px-48">
+			<ProductImage product={product} />
+			<ProductDescription product={product} />
+		</main>
 	);
 }
+
+export default singleProductPage;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ActiveLink } from "@/ui/atoms/ActiveLink";
+import { Navigation } from "@/ui/organisms/Navigation";
 
 export const metadata: Metadata = {
 	title: "Sklep",
@@ -14,16 +14,7 @@ export default function RootLayout({
 	return (
 		<html lang="pl">
 			<body>
-				<nav>
-					<ul className="mt-4 flex justify-center gap-4">
-						<li>
-							<ActiveLink href={"/"}>Home</ActiveLink>
-						</li>
-						<li>
-							<ActiveLink href={"/products"}>All</ActiveLink>
-						</li>
-					</ul>
-				</nav>
+				<Navigation />
 				{children}
 			</body>
 		</html>

@@ -9,6 +9,7 @@ export const ProductCoverImage = ({
 }: ProductCoverImageProps) => {
 	return (
 		<img
+			className="h-full w-full object-cover"
 			src={image.src}
 			alt={image.alt}
 			width={image.width}

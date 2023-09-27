@@ -11,7 +11,7 @@ export const ProductList: FC<ProductListPropsType> = async ({
 }) => {
 	return (
 		<ul
-			className="grid grid-cols-4 gap-4"
+			className="grid w-full grid-cols-2 gap-4 md:grid-cols-4"
 			data-testid="products-list"
 		>
 			{products.map((product: ProductType) => (
