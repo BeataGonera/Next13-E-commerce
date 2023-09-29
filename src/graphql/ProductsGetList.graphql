@@ -1,0 +1,11 @@
+query ProductsGetList {
+	products {
+		id
+		name
+		category
+		price
+		image
+		description
+		longDescription
+	}
+}

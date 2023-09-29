@@ -13,10 +13,28 @@ export type ProductType = {
 	image: ImageType;
 	description: string;
 	longDescription: string;
-	rating: {
-		rate: number;
-		count: number;
-	};
 };
 
 export type ProductListType = ProductType[];
+
+export type GraphQLResponse<T> =
+	| {
+			data?: undefined;
+			errors: { message: string }[];
+	  }
+	| {
+			data: T;
+			errors?: undefined;
+	  };
+
+export type ProductsGraphQLResponse = {
+	products: {
+		id: string;
+		name: string;
+		category: string;
+		price: number;
+		description: string;
+		longDescription: string;
+		image: string;
+	}[];
+};

@@ -10,6 +10,7 @@ export const generateMetadata = async ({
 	};
 }) => {
 	const product = await getProductById(params.productId);
+
 	return {
 		title: `Produkt ${product.name} - Sklep internetowy`,
 		description: `${product.description}`,

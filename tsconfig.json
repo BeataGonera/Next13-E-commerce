@@ -36,7 +36,8 @@
 		"__checks__/custom.spec.js",
 		"checkly.config.js",
 		"src/app/(static-pages)/[filename]/regulamin.mdx",
-		"src/app/(static-pages)/[filename]/polityka-prywatnosci.mdx"
+		"src/app/(static-pages)/[filename]/polityka-prywatnosci.mdx",
+		".graphqlrc.ts"
 	],
 	"exclude": ["node_modules"]
 }
