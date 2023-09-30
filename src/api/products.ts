@@ -1,5 +1,12 @@
-import { ProductsGetListDocument } from "@/gql/graphql";
-import { GraphQLResponse, ProductsGraphQLResponse } from "@/ui/types";
+import {
+	ProductsGetListDocument,
+	TypedDocumentString,
+} from "@/gql/graphql";
+import {
+	GraphQLResponse,
+	ProductType,
+	ProductsGraphQLResponse,
+} from "@/ui/types";
 
 type ProductsResponseItem = {
 	id: string;
@@ -15,14 +22,18 @@ type ProductsResponseItem = {
 	longDescription: string;
 };
 
-const executeGraphQL = async <TQuery, TVariables>(
-	query: TQuery,
+const executeGraphQL = async <TResult, TVariables>(
+	query: TypedDocumentString<TResult, TVariables>,
 	variables: TVariables,
-) => {
+): Promise<TResult> => {
 	const res = await fetch(
 		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln49wtmp4ugq01uo8itz6ibq/master",
 		{
 			method: "POST",
+			body: JSON.stringify({
+				query,
+				variables,
+			}),
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -40,49 +51,22 @@ const executeGraphQL = async <TQuery, TVariables>(
 		  };
 
 	const graphqlResponse =
-		(await res.json()) as GraphQLResponse<TQuery>;
+		(await res.json()) as GraphQLResponse<TResult>;
 
+	if (graphqlResponse.errors) {
+		throw TypeError(`GraphQL Error`, {
+			cause: graphqlResponse.errors,
+		});
+	}
 	return graphqlResponse.data;
 };
 
-// export const getProductsList = async () => {
-// 	const graphqlResponse = executeGraphQL(ProductsGetListDocument, {});
-// 	return graphqlResponse;
-// };
-
-export const getProductsList = async () => {
-	const res = await fetch(
-		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln49wtmp4ugq01uo8itz6ibq/master",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				query: /* GraphQL */ `
-					query Products {
-						products {
-							id
-							name
-							category
-							price
-							image
-							description
-							longDescription
-						}
-					}
-				`,
-			}),
-		},
+export const getProductsList = async (): Promise<any> => {
+	const graphqlResponse = await executeGraphQL(
+		ProductsGetListDocument,
+		{},
 	);
-
-	const productsResponse =
-		(await res.json()) as GraphQLResponse<ProductsGraphQLResponse>;
-
-	if (productsResponse.errors) {
-		throw TypeError(productsResponse.errors[0].message);
-	}
-	const products = productsResponse.data.products.map((p) => {
+	return graphqlResponse.products.map((p) => {
 		return {
 			id: p.id,
 			name: p.name,
@@ -98,7 +82,6 @@ export const getProductsList = async () => {
 			longDescription: p.longDescription,
 		};
 	});
-	return products;
 };
 
 export const getProductById = async (id: string) => {

@@ -1,14 +1,11 @@
-import { loadEnvConfig } from "@next/env";
 import type { CodegenConfig } from "@graphql-codegen/cli";
-
-loadEnvConfig(process.cwd());
 
 const config: CodegenConfig = {
 	schema:
 		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln49wtmp4ugq01uo8itz6ibq/master",
 	overwrite: true,
-	documents: "src/graphql/*.graphql",
 	ignoreNoDocuments: true,
+	documents: "src/graphql/*.graphql",
 	generates: {
 		"src/gql/": {
 			preset: "client",
@@ -22,7 +19,6 @@ const config: CodegenConfig = {
 				skipTypename: true,
 				documentMode: "string",
 			},
-			plugins: [],
 		},
 	},
 };
