@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import type { ProductType } from "../types";
 import { ProductCoverImage } from "./ProductCoverImage";
+import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 
 type ProductImageProps = {
-	product: ProductType;
+	product: ProductListItemFragmentFragment;
 };
 
 export const ProductImage: FC<ProductImageProps> = ({ product }) => {

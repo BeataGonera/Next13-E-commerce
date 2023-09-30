@@ -1,9 +1,9 @@
 import { type FC } from "react";
 import { ProductListItem } from "../molecules/ProductListItem";
-import { type ProductType, type ProductListType } from "../types";
+import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 
 type ProductListPropsType = {
-	products: ProductListType;
+	products: ProductListItemFragmentFragment[];
 };
 
 export const ProductList: FC<ProductListPropsType> = async ({
@@ -14,7 +14,7 @@ export const ProductList: FC<ProductListPropsType> = async ({
 			className="grid w-full grid-cols-2 gap-4 md:grid-cols-4"
 			data-testid="products-list"
 		>
-			{products.map((product: ProductType) => (
+			{products.map((product) => (
 				<ProductListItem product={product} key={product.id} />
 			))}
 		</ul>

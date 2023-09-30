@@ -1,0 +1,10 @@
+query ProductGetByCategorySlug($slug: String!) {
+	categories(where: { slug: $slug }) {
+		name
+		products(first: 10) {
+			... on Product {
+				...ProductListItemFragment
+			}
+		}
+	}
+}

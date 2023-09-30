@@ -1,19 +1,11 @@
-import type { ProductType } from "../types";
+import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 
 type ProductCoverImageProps = {
-	product: ProductType;
+	product: ProductListItemFragmentFragment;
 };
 
 export const ProductCoverImage = ({
 	product: { image },
 }: ProductCoverImageProps) => {
-	return (
-		<img
-			className="h-full w-full object-cover"
-			src={image.src}
-			alt={image.alt}
-			width={image.width}
-			height={image.height}
-		/>
-	);
+	return <img className="h-full w-full object-cover" src={image} />;
 };

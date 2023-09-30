@@ -1,12 +1,12 @@
 import { formatMoney } from "../utils";
-import type { ProductType } from "../types";
+import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 
 type ProductListItemDescriptionProps = {
-	product: ProductType;
+	product: ProductListItemFragmentFragment;
 };
 
 export const ProductListItemDescription = ({
-	product: { category, price, name },
+	product: { categories, price, name },
 }: ProductListItemDescriptionProps) => {
 	return (
 		<div className="flex flex-col gap-2 py-2">
@@ -16,7 +16,7 @@ export const ProductListItemDescription = ({
 					{formatMoney(price / 100)}
 				</h5>
 			</div>
-			<h6 className="text-xs text-slate-600">{category}</h6>
+			<h6 className="text-xs text-slate-600">{categories[0].name}</h6>
 		</div>
 	);
 };

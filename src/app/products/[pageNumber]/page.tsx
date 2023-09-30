@@ -1,8 +1,4 @@
-import {
-	getProductsList,
-	getProductsWithOffset,
-} from "@/api/products";
-import { Pagination } from "@/ui/organisms/Pagination";
+import { getProductsList } from "@/api/products";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 export const generateStaticParams = async () => {
@@ -24,24 +20,24 @@ export default async function ProductsPage({
 		pageNumber: string;
 	};
 }) {
-	const { pageNumber } = params;
-	const productsPerPage = 20;
-	const productsAll = await getProductsList();
-	const products = await getProductsWithOffset(
-		productsPerPage,
-		Number(pageNumber) * productsPerPage,
-	);
-	const numberOfPages = Math.ceil(
-		productsAll.length / productsPerPage,
-	);
+	// const { pageNumber } = params;
+	// const productsPerPage = 20;
+	const products = await getProductsList();
+	// const products = await getProductsWithOffset(
+	// 	productsPerPage,
+	// 	Number(pageNumber) * productsPerPage,
+	// );
+	// const numberOfPages = Math.ceil(
+	// 	productsAll.length / productsPerPage,
+	// );
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between gap-6 p-12 lg:px-24">
 			<ProductList products={products} />
-			<Pagination
+			{/* <Pagination
 				pageNumber={Number(pageNumber)}
 				numberOfPages={numberOfPages}
-			/>
+			/> */}
 		</main>
 	);
 }

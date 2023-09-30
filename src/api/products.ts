@@ -1,19 +1,18 @@
+import { notFound } from "next/navigation";
 import {
+	ProductGetByCategorySlugDocument,
+	ProductGetByIdDocument,
+	type ProductListItemFragmentFragment,
 	ProductsGetListDocument,
-	TypedDocumentString,
+	type TypedDocumentString,
 } from "@/gql/graphql";
-import {
-	GraphQLResponse,
-	ProductType,
-	ProductsGraphQLResponse,
-} from "@/ui/types";
 
 type ProductsResponseItem = {
 	id: string;
 	name: string;
 	price: number;
 	description: string;
-	category: string;
+	categories: string[];
 	rating: {
 		rate: number;
 		count: number;
@@ -22,7 +21,17 @@ type ProductsResponseItem = {
 	longDescription: string;
 };
 
-const executeGraphQL = async <TResult, TVariables>(
+type GraphQLResponse<T> =
+	| {
+			data?: undefined;
+			errors: { message: string }[];
+	  }
+	| {
+			data: T;
+			errors?: undefined;
+	  };
+
+export const executeGraphQL = async <TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
 	variables: TVariables,
 ): Promise<TResult> => {
@@ -39,20 +48,8 @@ const executeGraphQL = async <TResult, TVariables>(
 			},
 		},
 	);
-
-	type GraphQLResponse<T> =
-		| {
-				data?: undefined;
-				errors: { message: string }[];
-		  }
-		| {
-				data: T;
-				errors?: undefined;
-		  };
-
 	const graphqlResponse =
 		(await res.json()) as GraphQLResponse<TResult>;
-
 	if (graphqlResponse.errors) {
 		throw TypeError(`GraphQL Error`, {
 			cause: graphqlResponse.errors,
@@ -61,80 +58,37 @@ const executeGraphQL = async <TResult, TVariables>(
 	return graphqlResponse.data;
 };
 
-export const getProductsList = async (): Promise<any> => {
+export const getProductsList = async () => {
 	const graphqlResponse = await executeGraphQL(
 		ProductsGetListDocument,
 		{},
 	);
-	return graphqlResponse.products.map((p) => {
-		return {
-			id: p.id,
-			name: p.name,
-			category: p.category,
-			price: p.price,
-			image: {
-				src: p.image,
-				alt: p.name,
-				width: 100,
-				height: 100,
-			},
-			description: p.description,
-			longDescription: p.longDescription,
-		};
-	});
+	return graphqlResponse.products;
 };
 
-export const getProductById = async (id: string) => {
-	const res = await fetch(
-		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln49wtmp4ugq01uo8itz6ibq/master",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				query: /* GraphQL */ `
-					query Product($id: ID!) {
-						products(where: { id: $id }) {
-							id
-							name
-							category
-							price
-							image
-							description
-							longDescription
-						}
-					}
-				`,
-				variables: {
-					id,
-				},
-			}),
-		},
+export const getProductsByCategorySlug = async (
+	categorySlug: string,
+): Promise<ProductListItemFragmentFragment[]> => {
+	const graphqlResponse = await executeGraphQL(
+		ProductGetByCategorySlugDocument,
+		{ slug: categorySlug },
 	);
-	const productsResponse =
-		(await res.json()) as GraphQLResponse<ProductsGraphQLResponse>;
+	const products = graphqlResponse.categories[0].products;
+	return products;
+};
 
-	if (productsResponse.errors) {
-		throw TypeError(productsResponse.errors[0].message);
+export const getProductById = async (
+	id: string,
+): Promise<ProductListItemFragmentFragment> => {
+	const graphqlResponse = await executeGraphQL(
+		ProductGetByIdDocument,
+		{ id: id },
+	);
+	const product = graphqlResponse.product;
+	if (!product) {
+		throw notFound();
 	}
-	const products = productsResponse.data.products.map((p) => {
-		return {
-			id: p.id,
-			name: p.name,
-			category: p.category,
-			price: p.price,
-			image: {
-				src: p.image,
-				alt: p.name,
-				width: 100,
-				height: 100,
-			},
-			description: p.description,
-			longDescription: p.longDescription,
-		};
-	});
-	return products[0];
+	return product;
 };
 
 export const getProductsWithOffset = async (
@@ -163,7 +117,7 @@ const productsResponseItemToProductResponseType = (
 		name: productResponse.name,
 		price: productResponse.price,
 		description: productResponse.description,
-		category: productResponse.category,
+		categories: productResponse.categories[0],
 		image: {
 			src: productResponse.image,
 			alt: productResponse.name,
