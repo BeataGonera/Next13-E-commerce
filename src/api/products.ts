@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 import {
-	ProductGetByCategorySlugDocument,
+	ProductsGetByCategorySlugDocument,
 	ProductGetByIdDocument,
 	type ProductListItemFragmentFragment,
 	ProductsGetListDocument,
 	type TypedDocumentString,
+	ProductsGetByCollectionSlugDocument,
 } from "@/gql/graphql";
 
 type ProductsResponseItem = {
@@ -36,7 +37,7 @@ export const executeGraphQL = async <TResult, TVariables>(
 	variables: TVariables,
 ): Promise<TResult> => {
 	const res = await fetch(
-		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln49wtmp4ugq01uo8itz6ibq/master",
+		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln6hc4h3bho701uq8xxl5fnt/master",
 		{
 			method: "POST",
 			body: JSON.stringify({
@@ -70,10 +71,21 @@ export const getProductsByCategorySlug = async (
 	categorySlug: string,
 ): Promise<ProductListItemFragmentFragment[]> => {
 	const graphqlResponse = await executeGraphQL(
-		ProductGetByCategorySlugDocument,
+		ProductsGetByCategorySlugDocument,
 		{ slug: categorySlug },
 	);
 	const products = graphqlResponse.categories[0].products;
+	return products;
+};
+
+export const getProductsByCollectionSlug = async (
+	collectionSlug: string,
+): Promise<ProductListItemFragmentFragment[]> => {
+	const graphqlResponse = await executeGraphQL(
+		ProductsGetByCollectionSlugDocument,
+		{ slug: collectionSlug },
+	);
+	const products = graphqlResponse.collections[0].products;
 	return products;
 };
 

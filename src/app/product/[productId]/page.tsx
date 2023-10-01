@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
-import { executeGraphQL, getProductById } from "@/api/products";
-import { ProductGetByIdDocument } from "@/gql/graphql";
+import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 
@@ -11,17 +10,15 @@ export const generateMetadata = async ({
 		productId: string;
 	};
 }) => {
-	const { product } = await executeGraphQL(ProductGetByIdDocument, {
-		id: params.productId,
-	});
+	const product = await getProductById(params.productId);
 
 	return {
-		title: `Produkt ${product?.name} - Sklep internetowy`,
-		description: `${product?.description}`,
+		title: `Produkt ${product.name} - Sklep internetowy`,
+		description: `${product.description}`,
 		openGraph: {
-			title: `Produkt ${product?.name} - Sklep internetowy`,
-			description: product?.description,
-			images: [product?.image],
+			title: `Produkt ${product.name} - Sklep internetowy`,
+			description: product.description,
+			images: [product.images[0].url],
 		},
 	};
 };

@@ -1,3 +1,4 @@
+import { graphql } from "@/gql";
 import { formatMoney } from "../utils";
 import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 

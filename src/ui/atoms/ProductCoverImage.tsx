@@ -5,7 +5,9 @@ type ProductCoverImageProps = {
 };
 
 export const ProductCoverImage = ({
-	product: { image },
+	product: { images },
 }: ProductCoverImageProps) => {
-	return <img className="h-full w-full object-cover" src={image} />;
+	return (
+		<img className="h-full w-full object-cover" src={images[0].url} />
+	);
 };

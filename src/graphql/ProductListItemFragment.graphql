@@ -1,11 +1,12 @@
 fragment ProductListItemFragment on Product {
 	id
 	name
+	description
 	categories(first: 1) {
 		name
 	}
+	images(first: 1) {
+		url
+	}
 	price
-	image
-	description
-	longDescription
 }
