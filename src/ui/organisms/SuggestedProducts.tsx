@@ -11,9 +11,12 @@ const SuggestedProducts: FC<SuggestedProductsProps> = async ({
 }) => {
 	const products = await getSuggestedProducts(productCategorySlug);
 	return (
-		<div data-testid="related-products">
-			<ProductList products={products} />
-		</div>
+		<>
+			<h3>Suggested products</h3>
+			<div data-testid="related-products">
+				<ProductList products={products} />
+			</div>
+		</>
 	);
 };
 

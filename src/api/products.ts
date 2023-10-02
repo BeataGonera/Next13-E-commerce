@@ -8,6 +8,9 @@ import {
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetSuggestedDocument,
 	CategoriesGetListDocument,
+	VariantsGetByProductIdDocument,
+	ProductsGetListPaginateDocument,
+	ProductsGetByNameDocument,
 } from "@/gql/graphql";
 
 type ProductsResponseItem = {
@@ -69,12 +72,34 @@ export const getProductsList = async () => {
 	return graphqlResponse.products;
 };
 
+export const getProductsListPaginate = async (
+	first: number,
+	skip: number,
+) => {
+	const graphqlResponse = await executeGraphQL(
+		ProductsGetListPaginateDocument,
+		{ first: first, skip: skip },
+	);
+	return graphqlResponse.products;
+};
+
 export const getCategoriesList = async () => {
 	const graphqlResponse = await executeGraphQL(
 		CategoriesGetListDocument,
 		{},
 	);
 	return graphqlResponse.categories;
+};
+
+export const getVariantsByProductId = async (
+	id: string,
+): Promise<ProductListItemFragmentFragment[]> => {
+	const graphqlResponse = await executeGraphQL(
+		VariantsGetByProductIdDocument,
+		{ id: id },
+	);
+	const variants = graphqlResponse.products[0].variants;
+	return variants;
 };
 
 export const getProductsByCategorySlug = async (
@@ -122,6 +147,20 @@ export const getProductById = async (
 		throw notFound();
 	}
 	return product;
+};
+
+export const getProductsByName = async (
+	name: string,
+): Promise<ProductListItemFragmentFragment> => {
+	const graphqlResponse = await executeGraphQL(
+		ProductsGetByNameDocument,
+		{ name: name },
+	);
+	const products = graphqlResponse.products;
+	if (!products) {
+		throw notFound();
+	}
+	return products;
 };
 
 export const getProductsWithOffset = async (

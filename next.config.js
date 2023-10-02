@@ -15,6 +15,11 @@ const nextConfig = {
 				destination: "/categories/t-shirts/1",
 				permanent: false, //przeglądarka nie będzie cashować
 			},
+			{
+				source: "/products",
+				destination: "/products/1",
+				permanent: false, //przeglądarka nie będzie cashować
+			},
 		];
 	},
 };

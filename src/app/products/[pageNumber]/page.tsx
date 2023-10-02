@@ -1,9 +1,13 @@
-import { getProductsList } from "@/api/products";
+import {
+	getProductsList,
+	getProductsListPaginate,
+} from "@/api/products";
+import { Pagination } from "@/ui/organisms/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 export const generateStaticParams = async () => {
 	const products = await getProductsList();
-	const numberOfPages = Math.ceil(products.length / 20);
+	const numberOfPages = Math.ceil(products.length / 5);
 	const numberOfPagesArray: string[] = [];
 	for (let i = 0; i < numberOfPages; i++) {
 		numberOfPagesArray.push(i.toString());
@@ -20,24 +24,21 @@ export default async function ProductsPage({
 		pageNumber: string;
 	};
 }) {
-	// const { pageNumber } = params;
-	// const productsPerPage = 20;
-	const products = await getProductsList();
-	// const products = await getProductsWithOffset(
-	// 	productsPerPage,
-	// 	Number(pageNumber) * productsPerPage,
-	// );
-	// const numberOfPages = Math.ceil(
-	// 	productsAll.length / productsPerPage,
-	// );
+	const { pageNumber } = params;
+	const products = await getProductsListPaginate(
+		5,
+		Number(pageNumber) * 5,
+	);
+
+	const numberOfPages = 2; //ile stron wygenerowało się statycznie??
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between gap-6 p-12 lg:px-24">
 			<ProductList products={products} />
-			{/* <Pagination
+			<Pagination
 				pageNumber={Number(pageNumber)}
 				numberOfPages={numberOfPages}
-			/> */}
+			/>
 		</main>
 	);
 }

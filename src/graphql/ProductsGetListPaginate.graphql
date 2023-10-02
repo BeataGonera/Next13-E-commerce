@@ -1,0 +1,5 @@
+query ProductsGetListPaginate($first: Int, $skip: Int) {
+	products(first: $first, skip: $skip) {
+		...ProductListItemFragment
+	}
+}

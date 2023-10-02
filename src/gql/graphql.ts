@@ -10743,10 +10743,25 @@ export type ProductsGetByCollectionSlugQueryVariables = Exact<{
 
 export type ProductsGetByCollectionSlugQuery = { collections: Array<{ name: string, products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> }> };
 
+export type ProductsGetByNameQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ProductsGetByNameQuery = { products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> };
+
 export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProductsGetListQuery = { products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> };
+
+export type ProductsGetListPaginateQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ProductsGetListPaginateQuery = { products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> };
 
 export type ProductsGetSuggestedQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -10754,6 +10769,13 @@ export type ProductsGetSuggestedQueryVariables = Exact<{
 
 
 export type ProductsGetSuggestedQuery = { categories: Array<{ name: string, products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> }> };
+
+export type VariantsGetByProductIdQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type VariantsGetByProductIdQuery = { products: Array<{ variants: Array<{ name: string, color: ProductColor, size: ProductSize } | {}> }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10855,6 +10877,25 @@ export const ProductsGetByCollectionSlugDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetByCollectionSlugQuery, ProductsGetByCollectionSlugQueryVariables>;
+export const ProductsGetByNameDocument = new TypedDocumentString(`
+    query ProductsGetByName($name: String) {
+  products(where: {name_contains: $name}) {
+    ...ProductListItemFragment
+  }
+}
+    fragment ProductListItemFragment on Product {
+  id
+  name
+  description
+  categories(first: 1) {
+    name
+    slug
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsGetByNameQuery, ProductsGetByNameQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
   products {
@@ -10874,6 +10915,25 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
+export const ProductsGetListPaginateDocument = new TypedDocumentString(`
+    query ProductsGetListPaginate($first: Int, $skip: Int) {
+  products(first: $first, skip: $skip) {
+    ...ProductListItemFragment
+  }
+}
+    fragment ProductListItemFragment on Product {
+  id
+  name
+  description
+  categories(first: 1) {
+    name
+    slug
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsGetListPaginateQuery, ProductsGetListPaginateQueryVariables>;
 export const ProductsGetSuggestedDocument = new TypedDocumentString(`
     query ProductsGetSuggested($slug: String!) {
   categories(where: {slug: $slug}) {
@@ -10896,3 +10956,16 @@ export const ProductsGetSuggestedDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetSuggestedQuery, ProductsGetSuggestedQueryVariables>;
+export const VariantsGetByProductIdDocument = new TypedDocumentString(`
+    query VariantsGetByProductId($id: ID!) {
+  products(where: {id: $id}) {
+    variants {
+      ... on ProductSizeColorVariant {
+        name
+        color
+        size
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<VariantsGetByProductIdQuery, VariantsGetByProductIdQueryVariables>;

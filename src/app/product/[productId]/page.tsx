@@ -3,6 +3,7 @@ import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import SuggestedProducts from "@/ui/organisms/SuggestedProducts";
+import VariantSelect from "@/ui/organisms/VariantSelect";
 
 export const generateMetadata = async ({
 	params,
@@ -40,16 +41,15 @@ async function singleProductPage({
 		<main className="min-h-screen">
 			<div className="flex flex-col gap-12 px-4 py-12 md:grid md:grid-cols-2 md:px-24 lg:px-48">
 				<ProductImage product={product} />
-				<ProductDescription product={product} />
+				<div>
+					<ProductDescription product={product} />
+					<VariantSelect productId={product.id} />
+				</div>
 			</div>
-			<div className="flex gap-4 px-4 md:px-24 ">
+			<div className="px-4 md:px-24 lg:px-48 ">
 				<SuggestedProducts
 					productCategorySlug={product.categories[0].slug}
 				/>
-			</div>
-			<div>
-				<p>Wybierz rozmiar:</p>
-				<p>Wybierz kolor:</p>
 			</div>
 		</main>
 	);
