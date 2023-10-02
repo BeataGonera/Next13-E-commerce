@@ -18,7 +18,12 @@ export const ProductListItem = ({
 				className="flex h-full w-full flex-col justify-between"
 			>
 				<div className="border-1 h-48 w-full rounded-sm border-gray-200 bg-gray-100 p-4">
-					<ProductCoverImage product={product} />
+					<ProductCoverImage
+						src={product.images[0].url}
+						alt={product.name}
+						width={100}
+						height={100}
+					/>
 				</div>
 				<ProductListItemDescription product={product} />
 			</Link>

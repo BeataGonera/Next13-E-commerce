@@ -6,6 +6,8 @@ import {
 	ProductsGetListDocument,
 	type TypedDocumentString,
 	ProductsGetByCollectionSlugDocument,
+	ProductsGetSuggestedDocument,
+	CategoriesGetListDocument,
 } from "@/gql/graphql";
 
 type ProductsResponseItem = {
@@ -67,6 +69,14 @@ export const getProductsList = async () => {
 	return graphqlResponse.products;
 };
 
+export const getCategoriesList = async () => {
+	const graphqlResponse = await executeGraphQL(
+		CategoriesGetListDocument,
+		{},
+	);
+	return graphqlResponse.categories;
+};
+
 export const getProductsByCategorySlug = async (
 	categorySlug: string,
 ): Promise<ProductListItemFragmentFragment[]> => {
@@ -86,6 +96,17 @@ export const getProductsByCollectionSlug = async (
 		{ slug: collectionSlug },
 	);
 	const products = graphqlResponse.collections[0].products;
+	return products;
+};
+
+export const getSuggestedProducts = async (
+	categorySlug: string,
+): Promise<ProductListItemFragmentFragment[]> => {
+	const graphqlResponse = await executeGraphQL(
+		ProductsGetSuggestedDocument,
+		{ slug: categorySlug },
+	);
+	const products = graphqlResponse.categories[0].products;
 	return products;
 };
 

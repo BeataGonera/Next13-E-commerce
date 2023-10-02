@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
+import SuggestedProducts from "@/ui/organisms/SuggestedProducts";
 
 export const generateMetadata = async ({
 	params,
@@ -36,9 +37,20 @@ async function singleProductPage({
 	}
 
 	return (
-		<main className="flex min-h-screen flex-col gap-12 px-4 py-12 md:grid md:grid-cols-2 md:px-24 lg:px-48">
-			<ProductImage product={product} />
-			<ProductDescription product={product} />
+		<main className="min-h-screen">
+			<div className="flex flex-col gap-12 px-4 py-12 md:grid md:grid-cols-2 md:px-24 lg:px-48">
+				<ProductImage product={product} />
+				<ProductDescription product={product} />
+			</div>
+			<div className="flex gap-4 px-4 md:px-24 ">
+				<SuggestedProducts
+					productCategorySlug={product.categories[0].slug}
+				/>
+			</div>
+			<div>
+				<p>Wybierz rozmiar:</p>
+				<p>Wybierz kolor:</p>
+			</div>
 		</main>
 	);
 }

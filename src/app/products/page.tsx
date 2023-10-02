@@ -1,5 +1,6 @@
 import { getProductsList } from "@/api/products";
 import { ProductList } from "@/ui/organisms/ProductList";
+import { notFound } from "next/navigation";
 
 export default async function ProductsPage() {
 	const products = await getProductsList();

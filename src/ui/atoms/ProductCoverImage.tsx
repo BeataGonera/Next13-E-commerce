@@ -1,13 +1,26 @@
-import type { ProductListItemFragmentFragment } from "@/gql/graphql";
+import NextImage from "next/image";
+import { FC } from "react";
 
 type ProductCoverImageProps = {
-	product: ProductListItemFragmentFragment;
+	src: string;
+	alt: string;
+	width: number;
+	height: number;
 };
 
-export const ProductCoverImage = ({
-	product: { images },
+export const ProductCoverImage: FC<ProductCoverImageProps> = ({
+	src,
+	alt,
+	width,
+	height,
 }: ProductCoverImageProps) => {
 	return (
-		<img className="h-full w-full object-cover" src={images[0].url} />
+		<NextImage
+			className="h-full w-full object-cover"
+			src={src}
+			alt={alt}
+			width={width}
+			height={height}
+		/>
 	);
 };
