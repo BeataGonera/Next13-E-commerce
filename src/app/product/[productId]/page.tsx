@@ -26,7 +26,7 @@ export const generateMetadata = async ({
 };
 
 async function singleProductPage({
-	params, // searchParams,
+	params,
 }: {
 	params: { productId: string };
 }) {
@@ -37,6 +37,11 @@ async function singleProductPage({
 		notFound();
 	}
 
+	const addToCartAction = async (formData: FormData) => {
+		"use server";
+		console.log(formData);
+	};
+
 	return (
 		<main className="min-h-screen">
 			<div className="flex flex-col gap-12 px-4 py-12 md:grid md:grid-cols-2 md:px-24 lg:px-48">
@@ -44,6 +49,19 @@ async function singleProductPage({
 				<div>
 					<ProductDescription product={product} />
 					<VariantSelect productId={product.id} />
+					<form action={addToCartAction}>
+						<input
+							type="hidden"
+							name="productId"
+							value={params.productId}
+						></input>
+						<button
+							type="submit"
+							className="mt-4 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+						>
+							Add to cart
+						</button>
+					</form>
 				</div>
 			</div>
 			<div className="px-4 md:px-24 lg:px-48 ">
