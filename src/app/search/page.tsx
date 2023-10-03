@@ -1,9 +1,8 @@
 "use client";
 
-import { getProductsByName } from "@/api/products";
-import { ProductList } from "@/ui/organisms/ProductList";
 import { notFound } from "next/navigation";
-import { useEffect } from "react";
+import { ProductList } from "@/ui/organisms/ProductList";
+import { getProductsByName } from "@/api/products";
 
 const SearchResults = async ({
 	searchParams,

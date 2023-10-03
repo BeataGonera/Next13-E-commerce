@@ -1,5 +1,5 @@
 import NextImage from "next/image";
-import { FC } from "react";
+import type { FC } from "react";
 
 type ProductCoverImageProps = {
 	src: string;

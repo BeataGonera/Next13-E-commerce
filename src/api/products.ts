@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import {
 	ProductsGetByCategorySlugDocument,
 	ProductGetByIdDocument,
-	type ProductListItemFragmentFragment,
 	ProductsGetListDocument,
 	type TypedDocumentString,
 	ProductsGetByCollectionSlugDocument,
@@ -12,20 +11,6 @@ import {
 	ProductsGetListPaginateDocument,
 	ProductsGetByNameDocument,
 } from "@/gql/graphql";
-
-type ProductsResponseItem = {
-	id: string;
-	name: string;
-	price: number;
-	description: string;
-	categories: string[];
-	rating: {
-		rate: number;
-		count: number;
-	};
-	image: string;
-	longDescription: string;
-};
 
 type GraphQLResponse<T> =
 	| {
@@ -91,9 +76,7 @@ export const getCategoriesList = async () => {
 	return graphqlResponse.categories;
 };
 
-export const getVariantsByProductId = async (
-	id: string,
-): Promise<ProductListItemFragmentFragment[]> => {
+export const getVariantsByProductId = async (id: string) => {
 	const graphqlResponse = await executeGraphQL(
 		VariantsGetByProductIdDocument,
 		{ id: id },
@@ -104,7 +87,7 @@ export const getVariantsByProductId = async (
 
 export const getProductsByCategorySlug = async (
 	categorySlug: string,
-): Promise<ProductListItemFragmentFragment[]> => {
+) => {
 	const graphqlResponse = await executeGraphQL(
 		ProductsGetByCategorySlugDocument,
 		{ slug: categorySlug },
@@ -115,7 +98,7 @@ export const getProductsByCategorySlug = async (
 
 export const getProductsByCollectionSlug = async (
 	collectionSlug: string,
-): Promise<ProductListItemFragmentFragment[]> => {
+) => {
 	const graphqlResponse = await executeGraphQL(
 		ProductsGetByCollectionSlugDocument,
 		{ slug: collectionSlug },
@@ -124,9 +107,7 @@ export const getProductsByCollectionSlug = async (
 	return products;
 };
 
-export const getSuggestedProducts = async (
-	categorySlug: string,
-): Promise<ProductListItemFragmentFragment[]> => {
+export const getSuggestedProducts = async (categorySlug: string) => {
 	const graphqlResponse = await executeGraphQL(
 		ProductsGetSuggestedDocument,
 		{ slug: categorySlug },
@@ -135,9 +116,7 @@ export const getSuggestedProducts = async (
 	return products;
 };
 
-export const getProductById = async (
-	id: string,
-): Promise<ProductListItemFragmentFragment> => {
+export const getProductById = async (id: string) => {
 	const graphqlResponse = await executeGraphQL(
 		ProductGetByIdDocument,
 		{ id: id },
@@ -149,9 +128,7 @@ export const getProductById = async (
 	return product;
 };
 
-export const getProductsByName = async (
-	name: string,
-): Promise<ProductListItemFragmentFragment> => {
+export const getProductsByName = async (name: string) => {
 	const graphqlResponse = await executeGraphQL(
 		ProductsGetByNameDocument,
 		{ name: name },
@@ -161,41 +138,4 @@ export const getProductsByName = async (
 		throw notFound();
 	}
 	return products;
-};
-
-export const getProductsWithOffset = async (
-	productsPerPage: number,
-	activePage: number,
-) => {
-	const offset = productsPerPage * activePage;
-	const res = await fetch(
-		`https://naszsklep-api.vercel.app/api/products?take=${productsPerPage}&offset=${offset}`,
-	);
-	const productsResponse =
-		(await res.json()) as ProductsResponseItem[];
-
-	const products = productsResponse.map(
-		productsResponseItemToProductResponseType, // point-free
-	);
-
-	return products;
-};
-
-const productsResponseItemToProductResponseType = (
-	productResponse: ProductsResponseItem,
-) => {
-	return {
-		id: productResponse.id,
-		name: productResponse.name,
-		price: productResponse.price,
-		description: productResponse.description,
-		categories: productResponse.categories[0],
-		image: {
-			src: productResponse.image,
-			alt: productResponse.name,
-			width: 100,
-			height: 100,
-		},
-		longDescription: productResponse.longDescription,
-	};
 };

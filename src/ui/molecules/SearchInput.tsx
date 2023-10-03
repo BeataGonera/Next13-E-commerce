@@ -1,13 +1,12 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, type FormEvent, useEffect } from "react";
 
-const SearchInput = () => {
+export const SearchInput = () => {
 	const [searchedTerm, setSearchedTerm] = useState<string | null>();
 	const router = useRouter();
-	const pathname = usePathname();
-	const handleOnChange = async (e: FormEvent<HTMLInputElement>) => {
+	const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
 		setSearchedTerm(e.currentTarget.value);
 	};
 
@@ -17,7 +16,7 @@ const SearchInput = () => {
 			router.push(`/search?query=${searchedTerm}`);
 		}, 500);
 		return () => clearTimeout(timeout);
-	}, [searchedTerm]);
+	}, [searchedTerm, router]);
 
 	return (
 		<div className="relative w-full">
@@ -52,5 +51,3 @@ const SearchInput = () => {
 		</div>
 	);
 };
-
-export default SearchInput;

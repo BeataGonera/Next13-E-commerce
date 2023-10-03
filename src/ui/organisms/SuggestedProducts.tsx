@@ -1,12 +1,12 @@
-import { getSuggestedProducts } from "@/api/products";
-import { FC } from "react";
+import type { FC } from "react";
 import { ProductList } from "./ProductList";
+import { getSuggestedProducts } from "@/api/products";
 
 type SuggestedProductsProps = {
 	productCategorySlug: string;
 };
 
-const SuggestedProducts: FC<SuggestedProductsProps> = async ({
+export const SuggestedProducts: FC<SuggestedProductsProps> = async ({
 	productCategorySlug,
 }) => {
 	const products = await getSuggestedProducts(productCategorySlug);
@@ -19,5 +19,3 @@ const SuggestedProducts: FC<SuggestedProductsProps> = async ({
 		</>
 	);
 };
-
-export default SuggestedProducts;

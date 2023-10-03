@@ -2,8 +2,8 @@ import type { Route } from "next";
 import Link from "next/link";
 import { ActiveLink } from "../atoms/ActiveLink";
 import { ShoppingCartIcon } from "../atoms/ShoppingCartIcon";
+import { SearchInput } from "../molecules/SearchInput";
 import { getCategoriesList } from "@/api/products";
-import SearchInput from "../molecules/SearchInput";
 
 export const Navigation = async () => {
 	const categories = await getCategoriesList();

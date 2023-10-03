@@ -10,7 +10,7 @@ const config: CodegenConfig = {
 		"src/gql/": {
 			preset: "client",
 			presetConfig: {
-				fragmentMAsking: false,
+				fragmentMasking: false,
 			},
 			config: {
 				useTypeImports: true,

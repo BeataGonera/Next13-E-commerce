@@ -1,11 +1,11 @@
+import type { FC } from "react";
 import { getVariantsByProductId } from "@/api/products";
-import { FC } from "react";
 
 type VariantSelectProps = {
 	productId: string;
 };
 
-const VariantSelect: FC<VariantSelectProps> = async ({
+export const VariantSelect: FC<VariantSelectProps> = async ({
 	productId,
 }) => {
 	const variants = await getVariantsByProductId(productId);
@@ -16,11 +16,11 @@ const VariantSelect: FC<VariantSelectProps> = async ({
 					<p>Wybierz wariant</p>
 					<div>
 						<select id="variants">
-							{variants.map((variant) => (
+							{/* {variants.map((variant) => (
 								<option value={variant.name} className="">
 									{variant.name}
 								</option>
-							))}
+							))} */}
 						</select>
 					</div>
 				</div>
@@ -28,5 +28,3 @@ const VariantSelect: FC<VariantSelectProps> = async ({
 		</>
 	);
 };
-
-export default VariantSelect;

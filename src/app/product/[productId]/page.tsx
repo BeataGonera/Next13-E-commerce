@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
-import SuggestedProducts from "@/ui/organisms/SuggestedProducts";
-import VariantSelect from "@/ui/organisms/VariantSelect";
+import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
+import { VariantSelect } from "@/ui/organisms/VariantSelect";
 
 export const generateMetadata = async ({
 	params,

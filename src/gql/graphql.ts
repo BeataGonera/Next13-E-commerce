@@ -10725,35 +10725,35 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } | null };
 
-export type ProductListItemFragmentFragment = { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } & { ' $fragmentName'?: 'ProductListItemFragmentFragment' };
+export type ProductListItemFragmentFragment = { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> };
 
 export type ProductsGetByCategorySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type ProductsGetByCategorySlugQuery = { categories: Array<{ name: string, products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> }> };
+export type ProductsGetByCategorySlugQuery = { categories: Array<{ name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
 
 export type ProductsGetByCollectionSlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type ProductsGetByCollectionSlugQuery = { collections: Array<{ name: string, products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> }> };
+export type ProductsGetByCollectionSlugQuery = { collections: Array<{ name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
 
 export type ProductsGetByNameQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ProductsGetByNameQuery = { products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> };
+export type ProductsGetByNameQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> };
 
 export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProductsGetListQuery = { products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> };
+export type ProductsGetListQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> };
 
 export type ProductsGetListPaginateQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -10761,14 +10761,14 @@ export type ProductsGetListPaginateQueryVariables = Exact<{
 }>;
 
 
-export type ProductsGetListPaginateQuery = { products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> };
+export type ProductsGetListPaginateQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> };
 
 export type ProductsGetSuggestedQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type ProductsGetSuggestedQuery = { categories: Array<{ name: string, products: Array<{ ' $fragmentRefs'?: { 'ProductListItemFragmentFragment': ProductListItemFragmentFragment } }> }> };
+export type ProductsGetSuggestedQuery = { categories: Array<{ name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> }> }> };
 
 export type VariantsGetByProductIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
