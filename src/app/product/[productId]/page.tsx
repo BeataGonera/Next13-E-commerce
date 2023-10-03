@@ -4,6 +4,11 @@ import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 import { VariantSelect } from "@/ui/organisms/VariantSelect";
+import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
+import { addProductToCart, getOrCreateCart } from "@/api/cart";
+import { cookies } from "next/headers";
+import { CartGetByIdDocument } from "@/gql/graphql";
+import { executeGraphQL } from "@/api/lib";
 
 export const generateMetadata = async ({
 	params,
@@ -37,10 +42,11 @@ async function singleProductPage({
 		notFound();
 	}
 
-	const addToCartAction = async (formData: FormData) => {
+	async function addToCartAction() {
 		"use server";
-		console.log(formData);
-	};
+		const cart = await getOrCreateCart();
+		await addProductToCart(cart.id, product.id);
+	}
 
 	return (
 		<main className="min-h-screen">
@@ -48,19 +54,9 @@ async function singleProductPage({
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />
-					<VariantSelect productId={product.id} />
+					<VariantSelect productId={params.productId} />
 					<form action={addToCartAction}>
-						<input
-							type="hidden"
-							name="productId"
-							value={params.productId}
-						></input>
-						<button
-							type="submit"
-							className="mt-4 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-						>
-							Add to cart
-						</button>
+						<AddToCartButton />
 					</form>
 				</div>
 			</div>
