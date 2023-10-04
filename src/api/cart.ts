@@ -17,6 +17,7 @@ export const getCartFromCookie = async () => {
 			variables: {
 				id: cartId,
 			},
+			cache: "no-store",
 			next: {
 				tags: ["cart"], // wszytskie wywołania będą miały taki tag
 			},
@@ -35,6 +36,7 @@ export const getOrCreateCart = async () => {
 			variables: {
 				id: cartId,
 			},
+			cache: "no-store",
 		});
 		if (cart) {
 			return cart;
@@ -62,6 +64,7 @@ export async function addProductToCart(
 		variables: {
 			id: productId,
 		},
+		cache: "no-store",
 	});
 	if (!product)
 		throw new Error(`Product with id ${productId} not found`);
@@ -86,6 +89,7 @@ export const setProductQuantity = async (
 			id: itemId,
 			quantity: quantity,
 		},
+		cache: "no-store",
 	});
 };
 
@@ -93,5 +97,6 @@ export const removeProductFromCart = async (itemId: string) => {
 	await executeGraphQL({
 		query: CartRemoveProductDocument,
 		variables: { itemId: itemId },
+		cache: "no-store",
 	});
 };

@@ -5,6 +5,7 @@ import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
+import { FormReview } from "@/ui/organisms/FormReview";
 
 export const generateMetadata = async ({
 	params,
@@ -61,6 +62,7 @@ async function singleProductPage({
 				{/* <SuggestedProducts
 					productCategorySlug={product.categories[0].slug}
 				/> */}
+				<FormReview productId={product.id} />
 			</div>
 		</main>
 	);

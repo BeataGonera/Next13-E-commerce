@@ -11,6 +11,7 @@ import {
 	VariantsGetByProductIdDocument,
 	ProductsGetListPaginateDocument,
 	ProductsGetByNameDocument,
+	ReviewCreateDocument,
 } from "@/gql/graphql";
 
 export const getProductsList = async () => {
@@ -28,6 +29,9 @@ export const getProductsListPaginate = async (
 	const graphqlResponse = await executeGraphQL({
 		query: ProductsGetListPaginateDocument,
 		variables: { first: first, skip: skip },
+		next: {
+			revalidate: 15,
+		},
 	});
 	return graphqlResponse.products;
 };
@@ -102,4 +106,25 @@ export const getProductsByName = async (name: string) => {
 		throw notFound();
 	}
 	return products;
+};
+
+export const createReview = async (
+	productId: string,
+	headline: string,
+	name: string,
+	email: string,
+	content: string,
+	rating: number,
+) => {
+	await executeGraphQL({
+		query: ReviewCreateDocument,
+		variables: {
+			productId: productId,
+			headline: headline,
+			name: name,
+			email: email,
+			content: content,
+			rating: rating,
+		},
+	});
 };
