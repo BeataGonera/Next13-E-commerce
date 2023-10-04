@@ -41,6 +41,11 @@
 			}
 		],
 
+		"@typescript-eslint/no-misused-promises": [
+			"error",
+			{ "checksVoidReturn": false }
+		],
+
 		"import/no-duplicates": ["error", { "prefer-inline": true }],
 
 		// false negatives

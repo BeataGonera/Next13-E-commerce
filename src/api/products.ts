@@ -14,10 +14,10 @@ import {
 } from "@/gql/graphql";
 
 export const getProductsList = async () => {
-	const graphqlResponse = await executeGraphQL(
-		ProductsGetListDocument,
-		{},
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: ProductsGetListDocument,
+		variables: {},
+	});
 	return graphqlResponse.products;
 };
 
@@ -25,26 +25,26 @@ export const getProductsListPaginate = async (
 	first: number,
 	skip: number,
 ) => {
-	const graphqlResponse = await executeGraphQL(
-		ProductsGetListPaginateDocument,
-		{ first: first, skip: skip },
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: ProductsGetListPaginateDocument,
+		variables: { first: first, skip: skip },
+	});
 	return graphqlResponse.products;
 };
 
 export const getCategoriesList = async () => {
-	const graphqlResponse = await executeGraphQL(
-		CategoriesGetListDocument,
-		{},
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: CategoriesGetListDocument,
+		variables: {},
+	});
 	return graphqlResponse.categories;
 };
 
 export const getVariantsByProductId = async (id: string) => {
-	const graphqlResponse = await executeGraphQL(
-		VariantsGetByProductIdDocument,
-		{ id: id },
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: VariantsGetByProductIdDocument,
+		variables: { id: id },
+	});
 	const variants = graphqlResponse.products[0].variants;
 	return variants;
 };
@@ -52,10 +52,10 @@ export const getVariantsByProductId = async (id: string) => {
 export const getProductsByCategorySlug = async (
 	categorySlug: string,
 ) => {
-	const graphqlResponse = await executeGraphQL(
-		ProductsGetByCategorySlugDocument,
-		{ slug: categorySlug },
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: ProductsGetByCategorySlugDocument,
+		variables: { slug: categorySlug },
+	});
 	const products = graphqlResponse.categories[0].products;
 	return products;
 };
@@ -63,28 +63,28 @@ export const getProductsByCategorySlug = async (
 export const getProductsByCollectionSlug = async (
 	collectionSlug: string,
 ) => {
-	const graphqlResponse = await executeGraphQL(
-		ProductsGetByCollectionSlugDocument,
-		{ slug: collectionSlug },
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: ProductsGetByCollectionSlugDocument,
+		variables: { slug: collectionSlug },
+	});
 	const products = graphqlResponse.collections[0].products;
 	return products;
 };
 
 export const getSuggestedProducts = async (categorySlug: string) => {
-	const graphqlResponse = await executeGraphQL(
-		ProductsGetSuggestedDocument,
-		{ slug: categorySlug },
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: ProductsGetSuggestedDocument,
+		variables: { slug: categorySlug },
+	});
 	const products = graphqlResponse.categories[0].products;
 	return products;
 };
 
 export const getProductById = async (id: string) => {
-	const graphqlResponse = await executeGraphQL(
-		ProductGetByIdDocument,
-		{ id: id },
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: ProductGetByIdDocument,
+		variables: { id: id },
+	});
 	const product = graphqlResponse.product;
 	if (!product) {
 		throw notFound();
@@ -93,10 +93,10 @@ export const getProductById = async (id: string) => {
 };
 
 export const getProductsByName = async (name: string) => {
-	const graphqlResponse = await executeGraphQL(
-		ProductsGetByNameDocument,
-		{ name: name },
-	);
+	const graphqlResponse = await executeGraphQL({
+		query: ProductsGetByNameDocument,
+		variables: { name: name },
+	});
 	const products = graphqlResponse.products;
 	if (!products) {
 		throw notFound();

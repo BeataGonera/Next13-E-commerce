@@ -10,10 +10,16 @@ type GraphQLResponse<T> =
 			errors?: undefined;
 	  };
 
-export const executeGraphQL = async <TResult, TVariables>(
-	query: TypedDocumentString<TResult, TVariables>,
-	variables: TVariables,
-): Promise<TResult> => {
+export const executeGraphQL = async <TResult, TVariables>({
+	query,
+	variables,
+	next,
+}: {
+	query: TypedDocumentString<TResult, TVariables>;
+	variables: TVariables;
+	next?: NextFetchRequestConfig;
+	cache?: RequestCache;
+}): Promise<TResult> => {
 	const res = await fetch(
 		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln6hc4h3bho701uq8xxl5fnt/master",
 		{
@@ -25,6 +31,8 @@ export const executeGraphQL = async <TResult, TVariables>(
 			headers: {
 				"Content-Type": "application/json",
 			},
+			next,
+			cache: "no-cache",
 		},
 	);
 	const graphqlResponse =

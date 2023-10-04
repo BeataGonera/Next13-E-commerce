@@ -6,9 +6,7 @@ import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 import { VariantSelect } from "@/ui/organisms/VariantSelect";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
-import { cookies } from "next/headers";
-import { CartGetByIdDocument } from "@/gql/graphql";
-import { executeGraphQL } from "@/api/lib";
+import { revalidateTag } from "next/cache";
 
 export const generateMetadata = async ({
 	params,
@@ -46,6 +44,7 @@ async function singleProductPage({
 		"use server";
 		const cart = await getOrCreateCart();
 		await addProductToCart(cart.id, product.id);
+		revalidateTag("cart");
 	}
 
 	return (
@@ -54,16 +53,16 @@ async function singleProductPage({
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />
-					<VariantSelect productId={params.productId} />
+					{/* <VariantSelect productId={params.productId} /> */}
 					<form action={addToCartAction}>
 						<AddToCartButton />
 					</form>
 				</div>
 			</div>
 			<div className="px-4 md:px-24 lg:px-48 ">
-				<SuggestedProducts
+				{/* <SuggestedProducts
 					productCategorySlug={product.categories[0].slug}
-				/>
+				/> */}
 			</div>
 		</main>
 	);

@@ -4,9 +4,13 @@ import { ActiveLink } from "../atoms/ActiveLink";
 import { ShoppingCartIcon } from "../atoms/ShoppingCartIcon";
 import { SearchInput } from "../molecules/SearchInput";
 import { getCategoriesList } from "@/api/products";
+import { getCartFromCookie } from "@/api/cart";
 
 export const Navigation = async () => {
+	const cart = await getCartFromCookie();
 	const categories = await getCategoriesList();
+
+	const quantity = cart?.orderItems.length ?? 0;
 	const basicNavLinks = [
 		{
 			href: "/",
@@ -36,8 +40,12 @@ export const Navigation = async () => {
 				</ul>
 				<div className="flex w-2/6 items-center gap-4">
 					<SearchInput />
-					<Link href="/cart">
+					<Link href="/cart" className="flex items-end">
 						<ShoppingCartIcon color={"black"} size={32} />
+						<span className=" flex h-4 w-4 items-center justify-center rounded-full bg-blue-500 text-xs font-medium text-slate-50">
+							{quantity}
+						</span>
+						<span className="sr-only">items in cart, view bag </span>
 					</Link>
 				</div>
 			</div>
