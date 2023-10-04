@@ -1,8 +1,8 @@
+import { cookies } from "next/headers";
 import { executeGraphQL } from "@/api/lib";
 import { CartGetByIdDocument } from "@/gql/graphql";
 import { IncrementProductQuantity } from "@/ui/atoms/IncrementProductQuantity";
-import { formatMoney } from "@/ui/utils";
-import { cookies } from "next/headers";
+import { RemoveButton } from "@/ui/atoms/RemoveButton";
 
 const CartPage = async () => {
 	const getCart = async () => {
@@ -31,17 +31,19 @@ const CartPage = async () => {
 							<th>Product</th>
 							<th>Quantity</th>
 							<th>Price</th>
+							<th></th>
 						</tr>
 					</tbody>
 					<tbody>
 						{cart.orderItems.map((item) => (
 							<tr key={item.id}>
 								<td>{item.product?.name}</td>
-								<td>
+								<td className="flex gap-4">
 									<IncrementProductQuantity
 										itemId={item.id}
 										quantity={item.quantity}
 									/>
+									<RemoveButton itemId={item.id} />
 								</td>
 								{/* <td>{formatMoney(item.product.price / 100)}</td> */}
 							</tr>

@@ -1,12 +1,10 @@
 import { notFound } from "next/navigation";
+import { revalidateTag } from "next/cache";
 import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
-import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
-import { VariantSelect } from "@/ui/organisms/VariantSelect";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
-import { revalidateTag } from "next/cache";
 
 export const generateMetadata = async ({
 	params,

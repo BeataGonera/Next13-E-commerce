@@ -1,12 +1,13 @@
+import { cookies } from "next/headers";
+import { executeGraphQL } from "./lib";
 import {
 	CartAddProductDocument,
 	CartCreateDocument,
 	CartGetByIdDocument,
+	CartRemoveProductDocument,
 	CartSetProductQuantityDocument,
 	ProductGetByIdDocument,
 } from "@/gql/graphql";
-import { executeGraphQL } from "./lib";
-import { cookies } from "next/headers";
 
 export const getCartFromCookie = async () => {
 	const cartId = cookies().get("cartId")?.value;
@@ -85,5 +86,12 @@ export const setProductQuantity = async (
 			id: itemId,
 			quantity: quantity,
 		},
+	});
+};
+
+export const removeProductFromCart = async (itemId: string) => {
+	await executeGraphQL({
+		query: CartRemoveProductDocument,
+		variables: { itemId: itemId },
 	});
 };

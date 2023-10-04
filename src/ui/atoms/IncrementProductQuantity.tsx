@@ -1,7 +1,6 @@
 "use client";
-
-import { changeItemQuantity } from "@/app/cart/actions";
 import { experimental_useOptimistic as useOptimistic } from "react";
+import { changeItemQuantity } from "@/app/cart/actions";
 
 export const IncrementProductQuantity = ({
 	itemId,
