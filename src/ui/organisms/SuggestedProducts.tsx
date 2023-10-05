@@ -12,7 +12,9 @@ export const SuggestedProducts: FC<SuggestedProductsProps> = async ({
 	const products = await getSuggestedProducts(productCategorySlug);
 	return (
 		<>
-			<h3>Suggested products</h3>
+			<h3 className="mb-4 text-lg font-bold text-slate-800">
+				Suggested products
+			</h3>
 			<div data-testid="related-products">
 				<ProductList products={products} />
 			</div>

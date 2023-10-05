@@ -8,7 +8,7 @@ type ProductImageProps = {
 
 export const ProductImage: FC<ProductImageProps> = ({ product }) => {
 	return (
-		<div className="border-1 h-3/6 w-full rounded-sm border-gray-200 bg-gray-100 p-4 md:h-4/6">
+		<div className="border-1 w-full rounded-sm border-gray-200 bg-gray-100 p-4">
 			<ProductCoverImage
 				src={product.images[0].url}
 				alt={product.name}

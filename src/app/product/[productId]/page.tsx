@@ -10,6 +10,8 @@ import {
 	setProductQuantity,
 } from "@/api/cart";
 import { FormReview } from "@/ui/organisms/FormReview";
+import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
+import { VariantSelect } from "@/ui/organisms/VariantSelect";
 
 export const generateMetadata = async ({
 	params,
@@ -66,21 +68,21 @@ async function singleProductPage({
 	}
 
 	return (
-		<main className="min-h-screen">
-			<div className="flex flex-col gap-12 px-4 py-12 md:grid md:grid-cols-2 md:px-24 lg:px-48">
+		<main className="">
+			<div className="grid grid-cols-2 gap-12 px-4 py-12 md:px-24 lg:px-48">
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />
-					{/* <VariantSelect productId={params.productId} /> */}
+					<VariantSelect productId={params.productId} />
 					<form action={addToCartAction}>
 						<AddToCartButton />
 					</form>
 				</div>
 			</div>
 			<div className="px-4 md:px-24 lg:px-48 ">
-				{/* <SuggestedProducts
+				<SuggestedProducts
 					productCategorySlug={product.categories[0].slug}
-				/> */}
+				/>
 				<FormReview productId={product.id} />
 			</div>
 		</main>

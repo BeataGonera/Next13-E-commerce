@@ -14,6 +14,7 @@ export const IncrementProductQuantity = ({
 	return (
 		<form className="flex justify-center gap-4">
 			<button
+				data-testid="decrement"
 				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"
 				formAction={async () => {
 					setOptimisticQuantity(optimisticQuantity - 1);
@@ -24,6 +25,7 @@ export const IncrementProductQuantity = ({
 			</button>
 			<div data-testid="quantity">{optimisticQuantity}</div>
 			<button
+				data-testid="increment"
 				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"
 				formAction={async () => {
 					setOptimisticQuantity(optimisticQuantity + 1);

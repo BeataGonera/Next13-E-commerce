@@ -30,11 +30,13 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 	});
 
 	return (
-		<section className="flex flex-col gap-4">
-			<h3>Add a review</h3>
+		<section className="flex flex-col items-center gap-4">
+			<h3 className="mb-4 mt-4 text-lg font-bold text-slate-800">
+				Add a review
+			</h3>
 			<form
 				data-testid="add-review-form"
-				className="flex flex-col gap-2"
+				className="flex w-2/4 flex-col gap-2"
 				action={async (productId) => {
 					setOptimisticFormData({
 						title: title,
