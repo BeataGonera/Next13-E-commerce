@@ -2,6 +2,7 @@
 import { submitReviewAction } from "@/app/cart/actions";
 import { type FC, useState } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { experimental_useOptimistic as useOptimistic } from "react";
 
 type FormReviewProps = {
 	productId: string;
@@ -14,7 +15,19 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 		productId,
 	);
 
-	const [rating, setRating] = useState<number>(5);
+	const [title, setTitle] = useState("");
+	const [content, setContent] = useState("");
+	const [rating, setRating] = useState(5);
+	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
+
+	const [optimisticFormData, setOptimisticFormData] = useOptimistic({
+		title: title,
+		content: content,
+		rating: rating,
+		username: username,
+		email: email,
+	});
 
 	return (
 		<section className="flex flex-col gap-4">
@@ -22,26 +35,37 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 			<form
 				data-testid="add-review-form"
 				className="flex flex-col gap-2"
-				action={submitReviewActionWithID}
+				action={async (productId) => {
+					setOptimisticFormData({
+						title: title,
+						content: content,
+						rating: rating,
+						username: username,
+						email: email,
+					});
+					await submitReviewActionWithID(productId);
+				}}
 			>
 				<input
+					onChange={(e) => setTitle(e.currentTarget.value)}
 					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="Title"
 					name="title"
 				/>
 				<input
+					onChange={(e) => setContent(e.currentTarget.value)}
 					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="Content"
 					name="content"
 				/>
 				<select
+					onChange={(e) => setRating(Number(e.currentTarget.value))}
 					value={rating}
 					name="rating"
 					id="rating"
 					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
-					onChange={(e) => setRating(Number(e.currentTarget.value))}
 				>
 					<option value="5">5</option>
 					<option value="4">4</option>
@@ -50,12 +74,14 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 					<option value="1">1</option>
 				</select>
 				<input
+					onChange={(e) => setUsername(e.currentTarget.value)}
 					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="User name"
 					name="username"
 				/>
 				<input
+					onChange={(e) => setEmail(e.currentTarget.value)}
 					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="email"
 					placeholder="Email"

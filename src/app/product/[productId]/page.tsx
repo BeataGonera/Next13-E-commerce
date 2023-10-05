@@ -4,7 +4,11 @@ import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
-import { addProductToCart, getOrCreateCart } from "@/api/cart";
+import {
+	addProductToCart,
+	getOrCreateCart,
+	setProductQuantity,
+} from "@/api/cart";
 import { FormReview } from "@/ui/organisms/FormReview";
 
 export const generateMetadata = async ({
@@ -42,7 +46,22 @@ async function singleProductPage({
 	async function addToCartAction() {
 		"use server";
 		const cart = await getOrCreateCart();
-		await addProductToCart(cart.id, product.id);
+
+		if (cart.orderItems) {
+			const existingProduct = cart.orderItems.find(
+				(item) => item.product.id === product.id,
+			);
+			if (existingProduct) {
+				await setProductQuantity(
+					existingProduct.id,
+					existingProduct.quantity + 1,
+				);
+			} else {
+				await addProductToCart(cart.id, product.id);
+			}
+		} else {
+			await addProductToCart(cart.id, product.id);
+		}
 		revalidateTag("cart");
 	}
 

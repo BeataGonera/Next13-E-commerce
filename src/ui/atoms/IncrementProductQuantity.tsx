@@ -22,7 +22,7 @@ export const IncrementProductQuantity = ({
 			>
 				-
 			</button>
-			{optimisticQuantity}
+			<div data-testid="quantity">{optimisticQuantity}</div>
 			<button
 				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"
 				formAction={async () => {
