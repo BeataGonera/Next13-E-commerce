@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
+import { paymentAction } from "./actions";
 import { executeGraphQL } from "@/api/lib";
 import { CartGetByIdDocument } from "@/gql/graphql";
 import { IncrementProductQuantity } from "@/ui/atoms/IncrementProductQuantity";
 import { RemoveButton } from "@/ui/atoms/RemoveButton";
-import { paymentAction } from "./actions";
 
 const CartPage = async () => {
 	const getCart = async () => {

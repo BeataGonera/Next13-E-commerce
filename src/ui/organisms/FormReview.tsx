@@ -1,8 +1,11 @@
 "use client";
-import { submitReviewAction } from "@/app/cart/actions";
-import { type FC, useState } from "react";
+import {
+	type FC,
+	useState,
+	experimental_useOptimistic as useOptimistic,
+} from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
-import { experimental_useOptimistic as useOptimistic } from "react";
+import { submitReviewAction } from "@/app/cart/actions";
 
 type FormReviewProps = {
 	productId: string;
@@ -21,7 +24,7 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 
-	const [optimisticFormData, setOptimisticFormData] = useOptimistic({
+	const [_optimisticFormData, setOptimisticFormData] = useOptimistic({
 		title: title,
 		content: content,
 		rating: rating,

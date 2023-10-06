@@ -16,11 +16,11 @@ export const VariantSelect: FC<VariantSelectProps> = async ({
 					<p>Wybierz wariant</p>
 					<div>
 						<select id="variants">
-							{variants.map((variant) => (
+							{/* {variants.map((variant) => (
 								<option value={variant.name} className="">
 									{variant.name}
 								</option>
-							))}
+							))} */}
 						</select>
 					</div>
 				</div>

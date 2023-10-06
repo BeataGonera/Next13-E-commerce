@@ -10729,6 +10729,8 @@ export type CartCreateMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type CartCreateMutation = { createOrder?: { id: string } | null };
 
+export type CartFragmentFragment = { id: string, orderItems: Array<{ id: string, quantity: number, total: number, product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } | null }> };
+
 export type CartGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -10755,6 +10757,8 @@ export type CategoriesGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CategoriesGetListQuery = { categories: Array<{ name: string, slug: string }> };
+
+export type OrderItemFragmentFragment = { id: string, quantity: number, total: number, product?: { id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } | null };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -10854,6 +10858,56 @@ export const ProductListItemFragmentFragmentDoc = new TypedDocumentString(`
   price
 }
     `, {"fragmentName":"ProductListItemFragment"}) as unknown as TypedDocumentString<ProductListItemFragmentFragment, unknown>;
+export const OrderItemFragmentFragmentDoc = new TypedDocumentString(`
+    fragment OrderItemFragment on OrderItem {
+  id
+  quantity
+  total
+  product {
+    ...ProductListItemFragment
+  }
+}
+    fragment ProductListItemFragment on Product {
+  id
+  name
+  description
+  categories(first: 1) {
+    name
+    slug
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`, {"fragmentName":"OrderItemFragment"}) as unknown as TypedDocumentString<OrderItemFragmentFragment, unknown>;
+export const CartFragmentFragmentDoc = new TypedDocumentString(`
+    fragment CartFragment on Order {
+  id
+  orderItems {
+    ...OrderItemFragment
+  }
+}
+    fragment OrderItemFragment on OrderItem {
+  id
+  quantity
+  total
+  product {
+    ...ProductListItemFragment
+  }
+}
+fragment ProductListItemFragment on Product {
+  id
+  name
+  description
+  categories(first: 1) {
+    name
+    slug
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`, {"fragmentName":"CartFragment"}) as unknown as TypedDocumentString<CartFragmentFragment, unknown>;
 export const CartAddProductDocument = new TypedDocumentString(`
     mutation CartAddProduct($orderId: ID!, $total: Int!, $productId: ID!) {
   createOrderItem(
@@ -10873,18 +10927,24 @@ export const CartCreateDocument = new TypedDocumentString(`
 export const CartGetByIdDocument = new TypedDocumentString(`
     query CartGetById($id: ID!) {
   order(where: {id: $id}, stage: DRAFT) {
-    id
-    orderItems {
-      id
-      quantity
-      total
-      product {
-        ...ProductListItemFragment
-      }
-    }
+    ...CartFragment
   }
 }
-    fragment ProductListItemFragment on Product {
+    fragment CartFragment on Order {
+  id
+  orderItems {
+    ...OrderItemFragment
+  }
+}
+fragment OrderItemFragment on OrderItem {
+  id
+  quantity
+  total
+  product {
+    ...ProductListItemFragment
+  }
+}
+fragment ProductListItemFragment on Product {
   id
   name
   description

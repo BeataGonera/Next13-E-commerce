@@ -1,5 +1,7 @@
 "use server";
-
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import Stripe from "stripe";
 import {
 	getCartFromCookie,
 	removeProductFromCart,
@@ -7,9 +9,6 @@ import {
 } from "@/api/cart";
 import { executeGraphQL } from "@/api/lib";
 import { ReviewCreateDocument } from "@/gql/graphql";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import Stripe from "stripe";
 
 export const removeItemFromCartAction = async (itemId: string) => {
 	await removeProductFromCart(itemId);
@@ -34,7 +33,7 @@ export const submitReviewAction = async (
 			name: formData.get("username") as string,
 			email: formData.get("email") as string,
 			content: formData.get("content") as string,
-			rating: Number(formData.get("rating")) as number,
+			rating: Number(formData.get("rating")),
 		},
 	});
 };

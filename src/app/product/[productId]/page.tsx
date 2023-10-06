@@ -10,8 +10,7 @@ import {
 	setProductQuantity,
 } from "@/api/cart";
 import { FormReview } from "@/ui/organisms/FormReview";
-import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
-import { VariantSelect } from "@/ui/organisms/VariantSelect";
+import type { OrderItemFragmentFragment } from "@/gql/graphql";
 
 export const generateMetadata = async ({
 	params,
@@ -48,22 +47,22 @@ async function singleProductPage({
 	async function addToCartAction() {
 		"use server";
 		const cart = await getOrCreateCart();
+		console.log(productId);
 
-		if (cart.orderItems) {
-			const existingProduct = cart.orderItems.find(
-				(item) => item.product.id === product.id,
+		const existingProduct = cart.orderItems.find(
+			(item: OrderItemFragmentFragment) =>
+				item.product?.id === productId,
+		);
+
+		if (existingProduct) {
+			await setProductQuantity(
+				existingProduct.id,
+				existingProduct.quantity + 1,
 			);
-			if (existingProduct) {
-				await setProductQuantity(
-					existingProduct.id,
-					existingProduct.quantity + 1,
-				);
-			} else {
-				await addProductToCart(cart.id, product.id);
-			}
 		} else {
 			await addProductToCart(cart.id, product.id);
 		}
+
 		revalidateTag("cart");
 	}
 
@@ -73,16 +72,16 @@ async function singleProductPage({
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />
-					<VariantSelect productId={params.productId} />
+					{/* <VariantSelect productId={params.productId} /> */}
 					<form action={addToCartAction}>
 						<AddToCartButton />
 					</form>
 				</div>
 			</div>
 			<div className="px-4 md:px-24 lg:px-48 ">
-				<SuggestedProducts
+				{/* <SuggestedProducts
 					productCategorySlug={product.categories[0].slug}
-				/>
+				/> */}
 				<FormReview productId={product.id} />
 			</div>
 		</main>

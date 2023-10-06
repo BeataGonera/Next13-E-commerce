@@ -1,4 +1,3 @@
-import { getCartFromCookie } from "@/api/cart";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 
@@ -7,7 +6,7 @@ const cartSuccessPage = async ({
 }: {
 	searchParams: { session_id: string };
 }) => {
-	// if (!searchParams.sessionId) redirect("/");
+	if (!searchParams.session_id) redirect("/");
 	if (!process.env.STRIPE_SECRET_KEY) {
 		throw new Error("stripe key not defined");
 		return;

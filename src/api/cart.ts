@@ -3,6 +3,7 @@ import { executeGraphQL } from "./lib";
 import {
 	CartAddProductDocument,
 	CartCreateDocument,
+	type CartFragmentFragment,
 	CartGetByIdDocument,
 	CartRemoveProductDocument,
 	CartSetProductQuantityDocument,
@@ -28,32 +29,33 @@ export const getCartFromCookie = async () => {
 	}
 };
 
-export const getOrCreateCart = async () => {
-	const cartId = cookies().get("cartId")?.value;
-	if (cartId) {
-		const { order: cart } = await executeGraphQL({
-			query: CartGetByIdDocument,
-			variables: {
-				id: cartId,
-			},
-			cache: "no-store",
-		});
-		if (cart) {
-			return cart;
+export const getOrCreateCart =
+	async (): Promise<CartFragmentFragment> => {
+		const cartId = cookies().get("cartId")?.value;
+		if (cartId) {
+			const { order: cart } = await executeGraphQL({
+				query: CartGetByIdDocument,
+				variables: {
+					id: cartId,
+				},
+				cache: "no-store",
+			});
+			if (cart) {
+				return cart;
+			}
 		}
-	}
 
-	const { createOrder: newCart } = await executeGraphQL({
-		query: CartCreateDocument,
-		variables: {},
-	});
-	if (!newCart) {
-		throw new Error("Failed to create cart");
-	}
+		const { createOrder: newCart } = await executeGraphQL({
+			query: CartCreateDocument,
+			variables: {},
+		});
+		if (!newCart) {
+			throw new Error("Failed to create cart");
+		}
 
-	cookies().set("cartId", newCart.id);
-	return newCart;
-};
+		cookies().set("cartId", newCart.id);
+		return { id: newCart.id, orderItems: [] };
+	};
 
 export async function addProductToCart(
 	cartId: string,
