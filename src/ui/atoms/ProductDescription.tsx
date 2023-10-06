@@ -14,8 +14,8 @@ export const ProductDescription: FC<ProductDescriptionProps> = ({
 			<h1 className="text-2xl font-bold text-gray-800">
 				{product.name}
 			</h1>
-			<h5 className="text-lg">{formatMoney(product.price / 100)}</h5>
-			<h6 className="text-gray-500">{product.description}</h6>
+			<p className="text-lg">{formatMoney(product.price / 100)}</p>
+			<p className="text-gray-500">{product.description}</p>
 			<p className="text-xs font-bold text-gray-500">In stock</p>
 		</div>
 	);

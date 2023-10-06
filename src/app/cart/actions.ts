@@ -29,8 +29,8 @@ export const submitReviewAction = async (
 		query: ReviewCreateDocument,
 		variables: {
 			productId: productId,
-			headline: formData.get("title") as string,
-			name: formData.get("username") as string,
+			headline: formData.get("headline") as string,
+			name: formData.get("name") as string,
 			email: formData.get("email") as string,
 			content: formData.get("content") as string,
 			rating: Number(formData.get("rating")),

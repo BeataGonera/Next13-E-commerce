@@ -27,6 +27,7 @@ export default async function MainPage() {
 								height={300}
 								className="h-full w-full"
 							/>
+							{collection.slug}
 						</Link>
 					</div>
 				))}

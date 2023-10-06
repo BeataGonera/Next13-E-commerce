@@ -56,7 +56,7 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="Title"
-					name="title"
+					name="headline"
 				/>
 				<input
 					onChange={(e) => setContent(e.currentTarget.value)}
@@ -83,7 +83,7 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="User name"
-					name="username"
+					name="name"
 				/>
 				<input
 					onChange={(e) => setEmail(e.currentTarget.value)}

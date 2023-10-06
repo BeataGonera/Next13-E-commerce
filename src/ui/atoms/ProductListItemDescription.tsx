@@ -11,12 +11,12 @@ export const ProductListItemDescription = ({
 	return (
 		<div className="flex flex-col gap-2 py-2">
 			<div className="flex justify-between">
-				<h4 className="text-xs font-bold text-slate-800">{name}</h4>
-				<h5 className="text-xs font-bold">
+				<h2 className="text-xs font-bold text-slate-800">{name}</h2>
+				<p className="text-xs font-bold">
 					{formatMoney(price / 100)}
-				</h5>
+				</p>
 			</div>
-			<h6 className="text-xs text-slate-600">{categories[0].name}</h6>
+			<p className="text-xs text-slate-600">{categories[0].name}</p>
 		</div>
 	);
 };
