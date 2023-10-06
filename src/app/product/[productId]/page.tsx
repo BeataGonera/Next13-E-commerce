@@ -32,7 +32,7 @@ export const generateMetadata = async ({
 	};
 };
 
-async function singleProductPage({
+async function SingleProductPage({
 	params,
 }: {
 	params: { productId: string };
@@ -84,4 +84,4 @@ async function singleProductPage({
 	);
 }
 
-export default singleProductPage;
+export default SingleProductPage;
