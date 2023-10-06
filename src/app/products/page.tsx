@@ -1,12 +1,19 @@
-import { getProductsListPaginate } from "@/api/products";
+import {
+	getProductsList,
+	getProductsListPaginate,
+} from "@/api/products";
+import { Pagination } from "@/ui/organisms/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 export default async function ProductsPage() {
-	const products = await getProductsListPaginate(5, 0);
+	const products = await getProductsList();
+	const productsPaginated = await getProductsListPaginate(5, 0);
+	const numberOfPages = Math.ceil(products.length / 5);
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between py-12 sm:px-6 md:px-24 lg:px-48">
-			<ProductList products={products} />
+			<ProductList products={productsPaginated} />
+			<Pagination pageNumber={1} numberOfPages={numberOfPages} />
 		</main>
 	);
 }

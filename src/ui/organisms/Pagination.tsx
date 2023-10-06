@@ -37,13 +37,13 @@ export const Pagination: FC<PaginationProps> = ({
 
 	return (
 		<div className="flex items-center gap-6" aria-label="pagination">
-			<button onClick={next}>Previous</button>
+			{/* <button onClick={next}>Previous</button> */}
 			{numberOfPagesArray.map((page, index) => (
 				<ActiveLink href={`/products/${page}` as Route} key={index}>
 					{page}
 				</ActiveLink>
 			))}
-			<button onClick={prev}>Next</button>
+			{/* <button onClick={prev}>Next</button> */}
 		</div>
 	);
 };
