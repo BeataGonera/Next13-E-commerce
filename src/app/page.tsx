@@ -1,5 +1,4 @@
 import { getProductsListPaginate } from "@/api/products";
-import { Pagination } from "@/ui/organisms/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 export default async function MainPage() {
