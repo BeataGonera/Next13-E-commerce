@@ -72,16 +72,12 @@ async function singleProductPage({
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />
-					{/* <VariantSelect productId={params.productId} /> */}
 					<form action={addToCartAction}>
 						<AddToCartButton />
 					</form>
 				</div>
 			</div>
 			<div className="px-4 md:px-24 lg:px-48 ">
-				{/* <SuggestedProducts
-					productCategorySlug={product.categories[0].slug}
-				/> */}
 				<FormReview productId={product.id} />
 			</div>
 		</main>
