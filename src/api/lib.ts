@@ -21,7 +21,7 @@ export const executeGraphQL = async <TResult, TVariables>({
 	cache?: RequestCache;
 }): Promise<TResult> => {
 	const res = await fetch(
-		"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cln6hc4h3bho701uq8xxl5fnt/master",
+		"https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/cln6hc4h3bho701uq8xxl5fnt/master",
 		{
 			method: "POST",
 			body: JSON.stringify({

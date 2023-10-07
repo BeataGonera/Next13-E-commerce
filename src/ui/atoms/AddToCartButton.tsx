@@ -1,7 +1,7 @@
 "use client";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
-export const AddToCartButton = ({}) => {
+export const AddToCartButton = () => {
 	const formStatus = useFormStatus();
 	return (
 		<div>

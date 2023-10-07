@@ -12,7 +12,7 @@ export const ProductListItemDescription = ({
 		<div className="flex flex-col gap-2 py-2">
 			<div className="flex justify-between">
 				<h2 className="text-xs font-bold text-slate-800">{name}</h2>
-				<p className="text-xs font-bold">
+				<p className="text-xs font-bold" data-testid="product-price">
 					{formatMoney(price / 100)}
 				</p>
 			</div>

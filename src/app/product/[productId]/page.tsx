@@ -11,6 +11,7 @@ import {
 } from "@/api/cart";
 import { FormReview } from "@/ui/organisms/FormReview";
 import type { OrderItemFragmentFragment } from "@/gql/graphql";
+import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
 export const generateMetadata = async ({
 	params,
@@ -78,9 +79,9 @@ async function SingleProductPage({
 				</div>
 			</div>
 			<div className="px-4 md:px-24 lg:px-48 ">
-				{/* <SuggestedProducts
+				<SuggestedProducts
 					productCategorySlug={product.categories[0].slug}
-				/> */}
+				/>
 				<FormReview productId={product.id} />
 			</div>
 		</main>
