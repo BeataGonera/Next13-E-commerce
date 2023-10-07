@@ -1,0 +1,5 @@
+query productsGetListOrderedByPrice {
+	products(orderBy: price_ASC) {
+		...ProductListItemFragment
+	}
+}

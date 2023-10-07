@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, type FC, useEffect } from "react";
+import { useState, type FC } from "react";
 import { ProductListItem } from "../molecules/ProductListItem";
-import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 import { ButtonSortByPrice } from "../atoms/ButtonSortByPrice";
+import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 
 type ProductListPropsType = {
 	products: ProductListItemFragmentFragment[];

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ShoppingCartIcon } from "./ShoppingCartIcon";
 
-const CartButton = ({ quantity }: { quantity: number }) => {
+export const CartButton = ({ quantity }: { quantity: number }) => {
 	return (
 		<>
 			<Link href="/cart" className="flex items-end">
@@ -14,5 +14,3 @@ const CartButton = ({ quantity }: { quantity: number }) => {
 		</>
 	);
 };
-
-export default CartButton;

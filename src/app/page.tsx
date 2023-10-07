@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { getCollectionsList } from "@/api/collections";
 import {
 	getProductsList,
@@ -5,8 +7,6 @@ import {
 } from "@/api/products";
 import { Pagination } from "@/ui/organisms/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
-import Image from "next/image";
-import Link from "next/link";
 
 export default async function MainPage() {
 	const products = await getProductsList();
@@ -18,7 +18,7 @@ export default async function MainPage() {
 		<main className="p-24">
 			<section className="mb-8 grid grid-cols-3 gap-4">
 				{collections.map((collection) => (
-					<div>
+					<div key={collection.slug}>
 						<Link href={`/collections/${collection.slug}`}>
 							<Image
 								src={collection.image.url}

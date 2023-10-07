@@ -1,7 +1,7 @@
 "use client";
-import { ProductListItemFragmentFragment } from "@/gql/graphql";
+import type { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction } from "react";
+import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 
 export const ButtonSortByPrice = ({
 	products,

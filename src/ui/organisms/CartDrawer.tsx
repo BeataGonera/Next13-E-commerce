@@ -1,9 +1,9 @@
 import { type FC, type Dispatch, type SetStateAction } from "react";
 import { cookies } from "next/headers";
+import { CloseIcon } from "../atoms/CloseIcon";
+import { ProductListItemCartDrawer } from "../molecules/ProductListItemCartDrawer";
 import { executeGraphQL } from "@/api/lib";
 import { CartGetByIdDocument } from "@/gql/graphql";
-import { CloseIcon } from "../atoms/CloseIcon";
-import ProductListItemCartDrawer from "../molecules/ProductListItemCartDrawer";
 
 type CartDrawerProps = {
 	isCartDrawerOpen: boolean;
@@ -45,8 +45,11 @@ export const CartDrawer: FC<CartDrawerProps> = async ({
 				<div className="flex h-full flex-col justify-between p-12">
 					{cart?.orderItems.length ? (
 						<div>
-							{cart?.orderItems.map((item) => (
-								<ProductListItemCartDrawer product={item} />
+							{cart?.orderItems.map((item, index) => (
+								<ProductListItemCartDrawer
+									product={item}
+									key={index}
+								/>
 							))}
 						</div>
 					) : (

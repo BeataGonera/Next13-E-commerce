@@ -1,9 +1,8 @@
 import Image from "next/image";
-import { OrderItemFragmentFragment } from "@/gql/graphql";
 import { formatMoney } from "../utils";
-import { BinIcon } from "../atoms/BinIcon";
+import type { OrderItemFragmentFragment } from "@/gql/graphql";
 
-const ProductListItemCartDrawer = ({
+export const ProductListItemCartDrawer = ({
 	product,
 }: {
 	product: OrderItemFragmentFragment;
@@ -33,5 +32,3 @@ const ProductListItemCartDrawer = ({
 		</article>
 	);
 };
-
-export default ProductListItemCartDrawer;
