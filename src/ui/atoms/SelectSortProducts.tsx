@@ -1,6 +1,9 @@
 "use client";
 
-import { getProductsOrderedByPrice } from "@/api/products";
+import {
+	getProductsOrderedByPrice,
+	getProductsOrderedByRating,
+} from "@/api/products";
 import { ProductListItemFragmentFragment } from "@/gql/graphql";
 import {
 	type ChangeEvent,
@@ -46,7 +49,11 @@ export const SelectSortProducts: FC<SelectSortProductsProps> = ({
 		setProductsToDisplay(productsOrderedByPrice);
 	};
 
-	const getProductsOrderedByReatingMethod = async () => {};
+	const getProductsOrderedByReatingMethod = async () => {
+		const productsOrderedByRating =
+			await getProductsOrderedByRating();
+		setProductsToDisplay(productsOrderedByRating);
+	};
 
 	useEffect(() => {
 		if (selectedValue == "") return;

@@ -13,16 +13,67 @@ import {
 	ProductsGetByNameDocument,
 	ReviewCreateDocument,
 	ProductsGetListOrderedByPriceDocument,
-	ProductsGetListOrderedByRatingDocument,
 	ProductListItemFragmentFragment,
 } from "@/gql/graphql";
+
+export type Product = {
+	id: string;
+	name: string;
+	description: string;
+	price: number;
+	categories: Array<{ name: string; slug: string }>;
+	images: Array<{ url: string }>;
+	reviews: Array<{ rating: number }>;
+	averageRating: number;
+};
+
+const countAverageRating = (total: number, num: number) => {
+	return total + num;
+};
+const countRating = (reviews: Array<{ rating: number }>) => {
+	if (!reviews.length) return;
+	const sumWithInitial = reviews
+		.map((review) => review.rating)
+		.reduce(countAverageRating, 0);
+	const averageRating = (sumWithInitial / reviews.length).toFixed(1);
+	return averageRating;
+};
+
+const productFromQueryToProductWithAverageRating = (
+	productsFromQuery: ProductListItemFragmentFragment[],
+) => {
+	const productsWithAverageRating: Product[] = productsFromQuery.map(
+		(product) => {
+			const result = countRating(product.reviews);
+			let averageRating;
+			if (result) {
+				averageRating = result;
+			} else {
+				averageRating = 0;
+			}
+			return {
+				id: product.id,
+				name: product.name,
+				description: product.description,
+				price: product.price,
+				categories: product.categories,
+				images: product.images,
+				reviews: product.reviews,
+				averageRating: Number(averageRating),
+			};
+		},
+	);
+	return productsWithAverageRating;
+};
 
 export const getProductsList = async () => {
 	const graphqlResponse = await executeGraphQL({
 		query: ProductsGetListDocument,
 		variables: {},
 	});
-	return graphqlResponse.products;
+	return productFromQueryToProductWithAverageRating(
+		graphqlResponse.products,
+	);
 };
 
 export const getProductsListPaginate = async (
@@ -36,7 +87,9 @@ export const getProductsListPaginate = async (
 			revalidate: 15,
 		},
 	});
-	return graphqlResponse.products;
+	return productFromQueryToProductWithAverageRating(
+		graphqlResponse.products,
+	);
 };
 
 export const getCategoriesList = async () => {
@@ -67,7 +120,7 @@ export const getProductsByCategorySlug = async (
 	const categoryName = graphqlResponse.categories[0].name;
 	return {
 		categoryName: categoryName,
-		products: products,
+		products: productFromQueryToProductWithAverageRating(products),
 	};
 };
 
@@ -82,7 +135,7 @@ export const getProductsByCollectionSlug = async (
 	const collectionName = graphqlResponse.collections[0].name;
 	return {
 		collectionName: collectionName,
-		products: products,
+		products: productFromQueryToProductWithAverageRating(products),
 	};
 };
 
@@ -91,7 +144,9 @@ export const getSuggestedProducts = async (categorySlug: string) => {
 		query: ProductsGetSuggestedDocument,
 		variables: { slug: categorySlug },
 	});
-	const products = graphqlResponse.categories[0].products;
+	const products = productFromQueryToProductWithAverageRating(
+		graphqlResponse.categories[0].products,
+	);
 	return products;
 };
 
@@ -116,7 +171,7 @@ export const getProductsByName = async (name: string) => {
 	if (!products) {
 		throw notFound();
 	}
-	return products;
+	return productFromQueryToProductWithAverageRating(products);
 };
 
 export const createReview = async (
@@ -149,5 +204,13 @@ export const getProductsOrderedByPrice = async () => {
 	if (!orderedProducts) {
 		throw notFound();
 	}
-	return orderedProducts;
+	return productFromQueryToProductWithAverageRating(orderedProducts);
+};
+
+export const getProductsOrderedByRating = async () => {
+	const products = await getProductsList();
+	const productsOrderedByRating = products.sort(
+		(a, b) => b.averageRating - a.averageRating,
+	);
+	return productsOrderedByRating;
 };
