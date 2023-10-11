@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { paymentAction } from "./actions";
 import { executeGraphQL } from "@/api/lib";
 import { CartGetByIdDocument } from "@/gql/graphql";
-import { IncrementProductQuantity } from "@/ui/atoms/IncrementProductQuantity";
+import { ChangeProductQuantity } from "@/ui/atoms/ChangeProductQuantity";
 import { RemoveButton } from "@/ui/atoms/RemoveButton";
 
 const CartPage = async () => {
@@ -24,7 +24,7 @@ const CartPage = async () => {
 	const cart = await getCart();
 
 	return (
-		<main className="flex flex-col gap-12 px-4 py-12 md:px-24 lg:px-48">
+		<main className="flex flex-col gap-12 px-4 pt-36 md:px-24 lg:px-48">
 			{cart ? (
 				<>
 					<table className="w-2/4">
@@ -41,7 +41,7 @@ const CartPage = async () => {
 								<tr key={item.id}>
 									<td>{item.product?.name}</td>
 									<td className="flex gap-4">
-										<IncrementProductQuantity
+										<ChangeProductQuantity
 											itemId={item.id}
 											quantity={item.quantity}
 										/>

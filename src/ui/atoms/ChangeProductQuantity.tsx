@@ -2,7 +2,7 @@
 import { experimental_useOptimistic as useOptimistic } from "react";
 import { changeItemQuantity } from "@/app/cart/actions";
 
-export const IncrementProductQuantity = ({
+export const ChangeProductQuantity = ({
 	itemId,
 	quantity,
 }: {

@@ -30,10 +30,10 @@ export default async function ProductsPage({
 		Number(pageNumber) * 5,
 	);
 
-	const numberOfPages = 2; //ile stron wygenerowało się statycznie??
+	const numberOfPages = 2;
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between gap-6 p-12 lg:px-24">
+		<main className="flex min-h-screen flex-col items-center justify-between gap-6 p-4 pt-36 lg:px-24">
 			<ProductList products={products} />
 			<Pagination
 				pageNumber={Number(pageNumber)}

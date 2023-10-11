@@ -1,38 +1,26 @@
-import { type FC, type Dispatch, type SetStateAction } from "react";
-import { cookies } from "next/headers";
+"use client";
+
+import { type FC, useState } from "react";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { ProductListItemCartDrawer } from "../molecules/ProductListItemCartDrawer";
-import { executeGraphQL } from "@/api/lib";
-import { CartGetByIdDocument } from "@/gql/graphql";
+import { CartFragmentFragment } from "@/gql/graphql";
 
 type CartDrawerProps = {
-	isCartDrawerOpen: boolean;
-	setIsCartDrawerOpen: Dispatch<SetStateAction<boolean>>;
+	cart: CartFragmentFragment;
 };
 
-export const CartDrawer: FC<CartDrawerProps> = async ({
-	isCartDrawerOpen,
-	setIsCartDrawerOpen,
-}) => {
-	const getCart = async () => {
-		const cartId = cookies().get("cartId")?.value;
-		if (cartId) {
-			const { order: cart } = await executeGraphQL({
-				query: CartGetByIdDocument,
-				variables: {
-					id: cartId,
-				},
-			});
-			if (cart) {
-				return cart;
-			}
-		}
-	};
-	const cart = await getCart();
+export const CartDrawer: FC<CartDrawerProps> = ({ cart }) => {
+	const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(true);
 	return (
-		<div className="fixed left-0 top-0 h-screen w-screen backdrop-blur-sm ">
+		<div
+			className={`fixed left-0 top-0 h-screen w-screen backdrop-blur-sm ${
+				isCartDrawerOpen ? "block" : "hidden"
+			}`}
+		>
 			<div
-				className={`fixed right-0 top-0 z-10 flex h-full w-1/3 flex-col gap-4 bg-slate-900 ${isCartDrawerOpen} : "translate-x-0" ? "translate-x-full"}`}
+				className={`fixed right-0 top-0 z-10 flex h-full w-1/3 flex-col gap-4 bg-slate-900 ${
+					isCartDrawerOpen ? "translate-x-0" : "translate-x-full"
+				}`}
 			>
 				<div className="flex h-24 items-center justify-between border-b-2 border-slate-800 p-12">
 					<h2 className="text-center text-lg font-thin text-slate-50">

@@ -19,7 +19,7 @@ export const SearchInput = () => {
 	}, [searchedTerm, router]);
 
 	return (
-		<div className="relative w-full">
+		<div className="md: relative block w-full">
 			<input
 				type="search"
 				id="search-dropdown"

@@ -2,8 +2,8 @@
 
 import { useState, type FC } from "react";
 import { ProductListItem } from "../molecules/ProductListItem";
-import { ButtonSortByPrice } from "../atoms/ButtonSortByPrice";
 import type { ProductListItemFragmentFragment } from "@/gql/graphql";
+import { SelectSortProducts } from "../atoms/SelectSortProducts";
 
 type ProductListPropsType = {
 	products: ProductListItemFragmentFragment[];
@@ -12,23 +12,21 @@ type ProductListPropsType = {
 export const ProductList: FC<ProductListPropsType> = ({
 	products,
 }) => {
-	const [sortedProducts, setSortedProducts] =
-		useState<ProductListItemFragmentFragment[]>(products);
-
+	const [productsToDisplay, setProductsToDisplay] =
+		useState(products);
 	return (
-		<>
+		<div className="flex w-full flex-col gap-4">
+			<SelectSortProducts
+				setProductsToDisplay={setProductsToDisplay}
+			/>
 			<ul
 				className="grid w-full grid-cols-2 gap-4 md:grid-cols-4"
 				data-testid="products-list"
 			>
-				{sortedProducts.map((product) => (
+				{productsToDisplay.map((product) => (
 					<ProductListItem product={product} key={product.id} />
 				))}
 			</ul>
-			<ButtonSortByPrice
-				products={products}
-				setSortedProducts={setSortedProducts}
-			/>
-		</>
+		</div>
 	);
 };

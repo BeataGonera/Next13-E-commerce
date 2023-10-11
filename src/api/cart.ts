@@ -9,6 +9,7 @@ import {
 	CartSetProductQuantityDocument,
 	ProductGetByIdDocument,
 } from "@/gql/graphql";
+import { revalidatePath } from "next/cache";
 
 export const getCartFromCookie = async () => {
 	const cartId = cookies().get("cartId")?.value;
@@ -93,6 +94,7 @@ export const setProductQuantity = async (
 		},
 		cache: "no-store",
 	});
+	revalidatePath("/cart");
 };
 
 export const removeProductFromCart = async (itemId: string) => {

@@ -4,6 +4,8 @@ import React, { type FC, useState } from "react";
 import type { Route } from "next";
 import { useRouter } from "next/navigation";
 import { ActiveLink } from "../atoms/ActiveLink";
+import { ChevronLeftCircle } from "lucide-react";
+import { ChevronRightIcon } from "../atoms/ChevronRight";
 
 type PaginationProps = {
 	pageNumber: number;
@@ -37,13 +39,17 @@ export const Pagination: FC<PaginationProps> = ({
 
 	return (
 		<div className="flex items-center gap-6" aria-label="pagination">
-			<button onClick={next}>Previous</button>
+			<button onClick={next}>
+				<ChevronLeftCircle size={24} color="rgb(100 116 139)" />
+			</button>
 			{numberOfPagesArray.map((page, index) => (
 				<ActiveLink href={`/products/${page}` as Route} key={index}>
 					{page}
 				</ActiveLink>
 			))}
-			<button onClick={prev}>Next</button>
+			<button onClick={prev}>
+				<ChevronRightIcon size={24} color="rgb(100 116 139)" />
+			</button>
 		</div>
 	);
 };

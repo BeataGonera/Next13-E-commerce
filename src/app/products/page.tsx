@@ -11,7 +11,7 @@ export default async function ProductsPage() {
 	const numberOfPages = Math.ceil(products.length / 5);
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between py-12 sm:px-6 md:px-24 lg:px-48">
+		<main className="flex min-h-screen flex-col items-center justify-between p-4 pt-36 md:p-48">
 			<ProductList products={productsPaginated} />
 			<Pagination pageNumber={1} numberOfPages={numberOfPages} />
 		</main>

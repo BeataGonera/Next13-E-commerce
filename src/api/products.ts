@@ -12,6 +12,9 @@ import {
 	ProductsGetListPaginateDocument,
 	ProductsGetByNameDocument,
 	ReviewCreateDocument,
+	ProductsGetListOrderedByPriceDocument,
+	ProductsGetListOrderedByRatingDocument,
+	ProductListItemFragmentFragment,
 } from "@/gql/graphql";
 
 export const getProductsList = async () => {
@@ -61,7 +64,11 @@ export const getProductsByCategorySlug = async (
 		variables: { slug: categorySlug },
 	});
 	const products = graphqlResponse.categories[0].products;
-	return products;
+	const categoryName = graphqlResponse.categories[0].name;
+	return {
+		categoryName: categoryName,
+		products: products,
+	};
 };
 
 export const getProductsByCollectionSlug = async (
@@ -72,7 +79,11 @@ export const getProductsByCollectionSlug = async (
 		variables: { slug: collectionSlug },
 	});
 	const products = graphqlResponse.collections[0].products;
-	return products;
+	const collectionName = graphqlResponse.collections[0].name;
+	return {
+		collectionName: collectionName,
+		products: products,
+	};
 };
 
 export const getSuggestedProducts = async (categorySlug: string) => {
@@ -127,4 +138,16 @@ export const createReview = async (
 			rating: rating,
 		},
 	});
+};
+
+export const getProductsOrderedByPrice = async () => {
+	const graphqlResponse = await executeGraphQL({
+		query: ProductsGetListOrderedByPriceDocument,
+		variables: {},
+	});
+	const orderedProducts = graphqlResponse.products;
+	if (!orderedProducts) {
+		throw notFound();
+	}
+	return orderedProducts;
 };

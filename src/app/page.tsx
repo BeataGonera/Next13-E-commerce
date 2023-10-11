@@ -15,19 +15,22 @@ export default async function MainPage() {
 	const collections = await getCollectionsList();
 
 	return (
-		<main className="p-24">
-			<section className="mb-8 grid grid-cols-3 gap-4">
+		<main className="flex flex-col items-center p-8 pt-36 md:p-48">
+			<section className="mb-8 grid w-full grid-cols-1 gap-4 md:grid-cols-3">
 				{collections.map((collection) => (
 					<div key={collection.slug}>
-						<Link href={`/collections/${collection.slug}`}>
+						<Link
+							href={`/collections/${collection.slug}`}
+							className="flex flex-col items-center gap-2 md:gap-4"
+						>
 							<Image
 								src={collection.image.url}
 								alt={collection.name}
 								width={300}
 								height={300}
-								className="h-full w-full"
+								className="h-full w-full rounded-sm text-slate-900"
 							/>
-							{collection.slug}
+							{collection.name}
 						</Link>
 					</div>
 				))}

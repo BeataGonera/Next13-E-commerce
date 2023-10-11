@@ -4,6 +4,9 @@ import { SearchInput } from "../molecules/SearchInput";
 import { CartButton } from "../atoms/CartButton";
 import { getCategoriesList } from "@/api/products";
 import { getCartFromCookie } from "@/api/cart";
+import { MenuIcon } from "../atoms/HamburgerIcon";
+import { SearchIcon } from "../atoms/SearchIcon";
+import { CloseIcon } from "../atoms/CloseIcon";
 
 export const Navigation = async () => {
 	const cart = await getCartFromCookie();
@@ -26,9 +29,12 @@ export const Navigation = async () => {
 	}));
 	const navLinks = [...basicNavLinks, ...categoriesNavLinks];
 	return (
-		<div className="flex h-24 justify-between border-b-2 py-8 sm:px-6 md:px-24 lg:px-48">
-			<nav>
-				<ul className="flex justify-start gap-4">
+		<div className="fixed flex h-24 w-screen justify-between border-b-2 bg-white px-6 py-8 md:px-24 lg:px-48">
+			<nav className="flex items-center">
+				<button className="flex items-center justify-center text-blue-700 md:hidden">
+					<MenuIcon size={24} color="rgb(59 130 246)" />
+				</button>
+				<ul className="hidden justify-start gap-4 md:flex">
 					{navLinks.map((link, index) => (
 						<li key={index} className="flex items-center">
 							<ActiveLink href={link.href as Route}>
@@ -37,10 +43,25 @@ export const Navigation = async () => {
 						</li>
 					))}
 				</ul>
+				{/* <div className="fixed left-0 top-0 h-screen w-screen backdrop-blur-sm">
+					<button className="absolute left-12 top-12 z-20">
+						<CloseIcon size={24} color="gray" />
+					</button>
+					<ul className="fixed left-0 top-0 flex h-screen w-80 flex-col gap-4 border-r-2 border-slate-200 bg-white p-12 pt-24">
+						{navLinks.map((link, index) => (
+							<li key={index} className="flex items-center">
+								<ActiveLink href={link.href as Route}>
+									{link.label}
+								</ActiveLink>
+							</li>
+						))}
+					</ul>
+				</div> */}
 			</nav>
 
-			<div className="flex w-2/6 items-center gap-4">
+			<div className="flex items-center gap-4 text-blue-700">
 				<SearchInput />
+				{/* <SearchIcon size={24} color="rgb(59 130 246)" /> */}
 				<CartButton quantity={quantity} />
 			</div>
 		</div>
