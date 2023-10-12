@@ -29,7 +29,7 @@ const documents = {
     "query ProductsGetByCollectionSlug($first: Int!, $skip: Int!, $slug: String!) {\n  products(first: $first, skip: $skip, where: {collections_some: {slug: $slug}}) {\n    ...ProductListItemFragment\n  }\n  productsConnection(where: {collections_some: {slug: $slug}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetByCollectionSlugDocument,
     "query ProductsGetByName($name: String) {\n  products(where: {name_contains: $name}) {\n    ...ProductListItemFragment\n  }\n}": types.ProductsGetByNameDocument,
     "query ProductsGetList {\n  products {\n    ...ProductListItemFragment\n  }\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetListDocument,
-    "query productsGetListOrderedByPrice {\n  products(orderBy: price_ASC) {\n    ...ProductListItemFragment\n  }\n}": types.ProductsGetListOrderedByPriceDocument,
+    "query productsGetListOrderedByPrice($first: Int!, $skip: Int!) {\n  products(first: $first, skip: $skip, orderBy: price_ASC) {\n    ...ProductListItemFragment\n  }\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetListOrderedByPriceDocument,
     "query ProductsGetListPaginate($first: Int, $skip: Int) {\n  products(first: $first, skip: $skip) {\n    ...ProductListItemFragment\n  }\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetListPaginateDocument,
     "query ProductsGetSuggested($slug: String!) {\n  categories(where: {slug: $slug}) {\n    name\n    products(first: 4) {\n      ...ProductListItemFragment\n    }\n  }\n}": types.ProductsGetSuggestedDocument,
     "mutation ReviewCreate($productId: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {headline: $headline, name: $name, email: $email, content: $content, rating: $rating, product: {connect: {id: $productId}}}\n  ) {\n    id\n  }\n}": types.ReviewCreateDocument,
@@ -99,7 +99,7 @@ export function graphql(source: "query ProductsGetList {\n  products {\n    ...P
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query productsGetListOrderedByPrice {\n  products(orderBy: price_ASC) {\n    ...ProductListItemFragment\n  }\n}"): typeof import('./graphql').ProductsGetListOrderedByPriceDocument;
+export function graphql(source: "query productsGetListOrderedByPrice($first: Int!, $skip: Int!) {\n  products(first: $first, skip: $skip, orderBy: price_ASC) {\n    ...ProductListItemFragment\n  }\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ProductsGetListOrderedByPriceDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

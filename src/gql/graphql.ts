@@ -10804,10 +10804,13 @@ export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProductsGetListQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, collections: Array<{ name: string, slug: string }>, images: Array<{ url: string }>, reviews: Array<{ rating: number }> }>, productsConnection: { aggregate: { count: number } } };
 
-export type ProductsGetListOrderedByPriceQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProductsGetListOrderedByPriceQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  skip: Scalars['Int']['input'];
+}>;
 
 
-export type ProductsGetListOrderedByPriceQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, collections: Array<{ name: string, slug: string }>, images: Array<{ url: string }>, reviews: Array<{ rating: number }> }> };
+export type ProductsGetListOrderedByPriceQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string, slug: string }>, collections: Array<{ name: string, slug: string }>, images: Array<{ url: string }>, reviews: Array<{ rating: number }> }>, productsConnection: { aggregate: { count: number } } };
 
 export type ProductsGetListPaginateQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -11179,9 +11182,14 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
 export const ProductsGetListOrderedByPriceDocument = new TypedDocumentString(`
-    query productsGetListOrderedByPrice {
-  products(orderBy: price_ASC) {
+    query productsGetListOrderedByPrice($first: Int!, $skip: Int!) {
+  products(first: $first, skip: $skip, orderBy: price_ASC) {
     ...ProductListItemFragment
+  }
+  productsConnection {
+    aggregate {
+      count
+    }
   }
 }
     fragment ProductListItemFragment on Product {

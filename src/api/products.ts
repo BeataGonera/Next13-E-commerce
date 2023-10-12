@@ -214,16 +214,26 @@ export const createReview = async (
 	});
 };
 
-export const getProductsOrderedByPrice = async () => {
+export const getProductsOrderedByPrice = async (
+	first: number,
+	skip: number,
+) => {
 	const graphqlResponse = await executeGraphQL({
 		query: ProductsGetListOrderedByPriceDocument,
-		variables: {},
+		variables: {
+			first: first,
+			skip: skip,
+		},
 	});
 	const orderedProducts = graphqlResponse.products;
 	if (!orderedProducts) {
 		throw notFound();
 	}
-	return productFromQueryToProductWithAverageRating(orderedProducts);
+	return {
+		products:
+			productFromQueryToProductWithAverageRating(orderedProducts),
+		aggregate: graphqlResponse.productsConnection.aggregate.count,
+	};
 };
 
 export const getProductsOrderedByRating = async () => {
@@ -231,5 +241,5 @@ export const getProductsOrderedByRating = async () => {
 	const productsOrderedByRating = products.sort(
 		(a, b) => b.averageRating - a.averageRating,
 	);
-	return productsOrderedByRating;
+	return productsOrderedByRating.slice(0, 5);
 };

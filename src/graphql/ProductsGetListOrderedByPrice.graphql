@@ -1,5 +1,10 @@
-query productsGetListOrderedByPrice {
-	products(orderBy: price_ASC) {
+query productsGetListOrderedByPrice($first: Int!, $skip: Int!) {
+	products(first: $first, skip: $skip, orderBy: price_ASC) {
 		...ProductListItemFragment
+	}
+	productsConnection {
+		aggregate {
+			count
+		}
 	}
 }

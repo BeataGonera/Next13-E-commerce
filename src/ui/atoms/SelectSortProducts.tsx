@@ -43,8 +43,8 @@ export const SelectSortProducts: FC<SelectSortProductsProps> = ({
 	);
 
 	const getProductsOrderedByPriceMethod = async () => {
-		const productsOrderedByPrice = await getProductsOrderedByPrice();
-		setProductsToDisplay(productsOrderedByPrice);
+		const { products } = await getProductsOrderedByPrice(5, 0);
+		setProductsToDisplay(products);
 	};
 
 	const getProductsOrderedByReatingMethod = async () => {
