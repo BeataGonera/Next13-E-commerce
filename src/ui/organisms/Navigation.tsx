@@ -22,7 +22,7 @@ export const Navigation = async () => {
 		},
 	];
 	const categoriesNavLinks = categories.map((category) => ({
-		href: `/categories/${category.slug}/1`,
+		href: `/categories/${category.slug}`,
 		label: category.name,
 	}));
 	const navLinks = [...basicNavLinks, ...categoriesNavLinks];
