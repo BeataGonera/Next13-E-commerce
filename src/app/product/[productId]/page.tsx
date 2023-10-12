@@ -69,7 +69,7 @@ async function SingleProductPage({
 
 	return (
 		<main className="">
-			<div className="grid grid-cols-2 gap-12 px-4 py-12 md:px-24 lg:px-48">
+			<div className="grid grid-cols-2 gap-12 px-4 py-36 md:px-24 lg:px-48">
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />

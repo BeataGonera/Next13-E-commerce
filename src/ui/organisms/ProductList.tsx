@@ -2,11 +2,11 @@
 
 import { useState, type FC } from "react";
 import { ProductListItem } from "../molecules/ProductListItem";
-import type { ProductListItemFragmentFragment } from "@/gql/graphql";
 import { SelectSortProducts } from "../atoms/SelectSortProducts";
+import type { Product } from "@/api/products";
 
 type ProductListPropsType = {
-	products: ProductListItemFragmentFragment[];
+	products: Product[];
 };
 
 export const ProductList: FC<ProductListPropsType> = ({

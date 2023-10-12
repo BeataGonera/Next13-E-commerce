@@ -2,4 +2,9 @@ query ProductsGetList {
 	products {
 		...ProductListItemFragment
 	}
+	productsConnection {
+		aggregate {
+			count
+		}
+	}
 }

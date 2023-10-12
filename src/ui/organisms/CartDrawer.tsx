@@ -3,7 +3,7 @@
 import { type FC, useState } from "react";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { ProductListItemCartDrawer } from "../molecules/ProductListItemCartDrawer";
-import { CartFragmentFragment } from "@/gql/graphql";
+import { type CartFragmentFragment } from "@/gql/graphql";
 
 type CartDrawerProps = {
 	cart: CartFragmentFragment;

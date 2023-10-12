@@ -1,17 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getCollectionsList } from "@/api/collections";
-import {
-	getProductsList,
-	getProductsListPaginate,
-} from "@/api/products";
+import { getProductsListPaginate } from "@/api/products";
 import { Pagination } from "@/ui/organisms/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 export default async function MainPage() {
-	const products = await getProductsList();
-	const productsPaginated = await getProductsListPaginate(5, 0);
-	const numberOfPages = Math.ceil(products.length / 5);
+	const { products, aggregate } = await getProductsListPaginate(5, 0);
 	const collections = await getCollectionsList();
 
 	return (
@@ -36,8 +31,12 @@ export default async function MainPage() {
 				))}
 			</section>
 
-			<ProductList products={productsPaginated} />
-			<Pagination pageNumber={1} numberOfPages={numberOfPages} />
+			<ProductList products={products} />
+			<Pagination
+				pageNumber={1}
+				numberOfPages={Math.ceil(aggregate / 5)}
+				path="/products/"
+			/>
 		</main>
 	);
 }

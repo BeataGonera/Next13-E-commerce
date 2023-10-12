@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductListItemDescription } from "../atoms/ProductListItemDescription";
-import type { ProductListItemFragmentFragment } from "@/gql/graphql";
+import type { Product } from "@/api/products";
 
 type ProductListItemProps = {
-	product: ProductListItemFragmentFragment;
+	product: Product;
 	key: string;
 };
 

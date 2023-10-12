@@ -1,23 +1,19 @@
 "use client";
 
-import React, { type FC, useState } from "react";
+import React, { type FC } from "react";
 import type { Route } from "next";
-import { useRouter } from "next/navigation";
 import { ActiveLink } from "../atoms/ActiveLink";
-import { ChevronLeftCircle } from "lucide-react";
-import { ChevronRightIcon } from "../atoms/ChevronRight";
 
 type PaginationProps = {
 	pageNumber: number;
 	numberOfPages: number;
+	path: string;
 };
 
 export const Pagination: FC<PaginationProps> = ({
-	pageNumber,
 	numberOfPages,
+	path,
 }) => {
-	const [active, setActive] = useState(pageNumber);
-	const router = useRouter();
 	const numberOfPagesArray: string[] = [];
 	const generatePagesNumbersArray = () => {
 		for (let i = 1; i <= numberOfPages; i++) {
@@ -27,29 +23,20 @@ export const Pagination: FC<PaginationProps> = ({
 
 	generatePagesNumbersArray();
 
-	const next = () => {
-		setActive(active + 1);
-		router.push(`/products/${active}`);
-	};
-
-	const prev = () => {
-		setActive(active - 1);
-		router.push(`/products/${active}`);
-	};
-
 	return (
-		<div className="flex items-center gap-6" aria-label="pagination">
-			<button onClick={next}>
-				<ChevronLeftCircle size={24} color="rgb(100 116 139)" />
-			</button>
-			{numberOfPagesArray.map((page, index) => (
-				<ActiveLink href={`/products/${page}` as Route} key={index}>
-					{page}
-				</ActiveLink>
-			))}
-			<button onClick={prev}>
-				<ChevronRightIcon size={24} color="rgb(100 116 139)" />
-			</button>
-		</div>
+		<>
+			{numberOfPages > 1 ? (
+				<div
+					className="flex items-center gap-6"
+					aria-label="pagination"
+				>
+					{numberOfPagesArray.map((page, index) => (
+						<ActiveLink href={`${path}${page}` as Route} key={index}>
+							{page}
+						</ActiveLink>
+					))}
+				</div>
+			) : null}
+		</>
 	);
 };

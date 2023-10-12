@@ -26,20 +26,25 @@ const CategoryPage = async ({
 		pageNumber: string;
 	};
 }) => {
-	const { category } = params;
-	const { products, categoryName } =
-		await getProductsByCategorySlug(category); // tu powinien pobierać 5 // dokończyć paginację
-	const numberOfPages = Math.ceil(products.length / 5);
+	const { category, pageNumber } = params;
+	const skip = (Number(pageNumber) - 1) * 5;
+	const { products, categoryFromQuery, aggregate } =
+		await getProductsByCategorySlug(5, skip, category);
+	const numberOfPages = Math.ceil(aggregate / 5);
 
 	if (!products) {
 		throw notFound();
 	}
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between pt-36 sm:px-6 md:px-24 lg:px-48">
-			<h1 className="text-slate-950">{categoryName}</h1>
+		<main className="flex min-h-screen flex-col items-center pt-36 sm:px-6 md:px-24 lg:px-48">
+			<h1 className="text-slate-950">{categoryFromQuery.name}</h1>
 			<ProductList products={products} />
-			<Pagination pageNumber={1} numberOfPages={numberOfPages} />
+			<Pagination
+				pageNumber={Number(pageNumber)}
+				numberOfPages={numberOfPages}
+				path={`/categories/${categoryFromQuery.slug}/`}
+			/>
 		</main>
 	);
 };

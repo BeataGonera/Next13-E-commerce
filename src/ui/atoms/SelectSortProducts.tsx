@@ -1,11 +1,6 @@
 "use client";
 
 import {
-	getProductsOrderedByPrice,
-	getProductsOrderedByRating,
-} from "@/api/products";
-import { ProductListItemFragmentFragment } from "@/gql/graphql";
-import {
 	type ChangeEvent,
 	useEffect,
 	useState,
@@ -13,11 +8,14 @@ import {
 	type Dispatch,
 	type SetStateAction,
 } from "react";
+import {
+	type Product,
+	getProductsOrderedByPrice,
+	getProductsOrderedByRating,
+} from "@/api/products";
 
 type SelectSortProductsProps = {
-	setProductsToDisplay: Dispatch<
-		SetStateAction<ProductListItemFragmentFragment[]>
-	>;
+	setProductsToDisplay: Dispatch<SetStateAction<Product[]>>;
 };
 
 export const SelectSortProducts: FC<SelectSortProductsProps> = ({
@@ -58,9 +56,9 @@ export const SelectSortProducts: FC<SelectSortProductsProps> = ({
 	useEffect(() => {
 		if (selectedValue == "") return;
 		if (selectedValue === "sort-by-price") {
-			getProductsOrderedByPriceMethod();
+			getProductsOrderedByPriceMethod().catch(console.error);
 		} else if (selectedValue === "sort-by-rating") {
-			getProductsOrderedByReatingMethod();
+			getProductsOrderedByReatingMethod().catch(console.error);
 		}
 	}, [selectedValue]);
 

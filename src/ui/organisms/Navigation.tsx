@@ -2,11 +2,9 @@ import type { Route } from "next";
 import { ActiveLink } from "../atoms/ActiveLink";
 import { SearchInput } from "../molecules/SearchInput";
 import { CartButton } from "../atoms/CartButton";
+import { MenuIcon } from "../atoms/HamburgerIcon";
 import { getCategoriesList } from "@/api/products";
 import { getCartFromCookie } from "@/api/cart";
-import { MenuIcon } from "../atoms/HamburgerIcon";
-import { SearchIcon } from "../atoms/SearchIcon";
-import { CloseIcon } from "../atoms/CloseIcon";
 
 export const Navigation = async () => {
 	const cart = await getCartFromCookie();

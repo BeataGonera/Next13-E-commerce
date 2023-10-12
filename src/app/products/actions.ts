@@ -3,5 +3,5 @@
 import { getProductsOrderedByPrice } from "@/api/products";
 
 export const sortProductsByPriceAction = async () => {
-	const orderedProducts = await getProductsOrderedByPrice();
+	const _orderedProducts = await getProductsOrderedByPrice();
 };

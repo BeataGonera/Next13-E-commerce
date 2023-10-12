@@ -6,6 +6,10 @@ fragment ProductListItemFragment on Product {
 		name
 		slug
 	}
+	collections(first: 1) {
+		name
+		slug
+	}
 	images(first: 1) {
 		url
 	}

@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { executeGraphQL } from "./lib";
-
 import {
 	ProductsGetByCategorySlugDocument,
 	ProductGetByIdDocument,
@@ -13,7 +12,7 @@ import {
 	ProductsGetByNameDocument,
 	ReviewCreateDocument,
 	ProductsGetListOrderedByPriceDocument,
-	ProductListItemFragmentFragment,
+	type ProductListItemFragmentFragment,
 } from "@/gql/graphql";
 
 export type Product = {
@@ -22,6 +21,7 @@ export type Product = {
 	description: string;
 	price: number;
 	categories: Array<{ name: string; slug: string }>;
+	collections: Array<{ name: string; slug: string }>;
 	images: Array<{ url: string }>;
 	reviews: Array<{ rating: number }>;
 	averageRating: number;
@@ -57,6 +57,7 @@ const productFromQueryToProductWithAverageRating = (
 				description: product.description,
 				price: product.price,
 				categories: product.categories,
+				collections: product.collections,
 				images: product.images,
 				reviews: product.reviews,
 				averageRating: Number(averageRating),
@@ -71,9 +72,14 @@ export const getProductsList = async () => {
 		query: ProductsGetListDocument,
 		variables: {},
 	});
-	return productFromQueryToProductWithAverageRating(
-		graphqlResponse.products,
-	);
+	const productsWithRating =
+		productFromQueryToProductWithAverageRating(
+			graphqlResponse.products,
+		);
+	return {
+		products: productsWithRating,
+		aggregate: graphqlResponse.productsConnection.aggregate.count,
+	};
 };
 
 export const getProductsListPaginate = async (
@@ -87,9 +93,15 @@ export const getProductsListPaginate = async (
 			revalidate: 15,
 		},
 	});
-	return productFromQueryToProductWithAverageRating(
-		graphqlResponse.products,
-	);
+	const productsWithAverageRating =
+		productFromQueryToProductWithAverageRating(
+			graphqlResponse.products,
+		);
+
+	return {
+		products: productsWithAverageRating,
+		aggregate: graphqlResponse.productsConnection.aggregate.count,
+	};
 };
 
 export const getCategoriesList = async () => {
@@ -110,32 +122,39 @@ export const getVariantsByProductId = async (id: string) => {
 };
 
 export const getProductsByCategorySlug = async (
+	first: number,
+	skip: number,
 	categorySlug: string,
 ) => {
 	const graphqlResponse = await executeGraphQL({
 		query: ProductsGetByCategorySlugDocument,
-		variables: { slug: categorySlug },
+		variables: { first: first, skip: skip, slug: categorySlug },
 	});
-	const products = graphqlResponse.categories[0].products;
-	const categoryName = graphqlResponse.categories[0].name;
+	const products = graphqlResponse.products;
+	const category = graphqlResponse.products[0].categories[0];
 	return {
-		categoryName: categoryName,
+		categoryFromQuery: category,
 		products: productFromQueryToProductWithAverageRating(products),
+		aggregate: graphqlResponse.productsConnection.aggregate.count,
 	};
 };
 
 export const getProductsByCollectionSlug = async (
 	collectionSlug: string,
+	first: number,
+	skip: number,
 ) => {
 	const graphqlResponse = await executeGraphQL({
 		query: ProductsGetByCollectionSlugDocument,
-		variables: { slug: collectionSlug },
+		variables: { slug: collectionSlug, first: first, skip: skip },
 	});
-	const products = graphqlResponse.collections[0].products;
-	const collectionName = graphqlResponse.collections[0].name;
+	const products = graphqlResponse.products;
+	const collectionName =
+		graphqlResponse.products[0].collections[0].name;
 	return {
 		collectionName: collectionName,
 		products: productFromQueryToProductWithAverageRating(products),
+		aggregate: graphqlResponse.productsConnection.aggregate.count,
 	};
 };
 
@@ -208,7 +227,7 @@ export const getProductsOrderedByPrice = async () => {
 };
 
 export const getProductsOrderedByRating = async () => {
-	const products = await getProductsList();
+	const { products } = await getProductsList();
 	const productsOrderedByRating = products.sort(
 		(a, b) => b.averageRating - a.averageRating,
 	);
