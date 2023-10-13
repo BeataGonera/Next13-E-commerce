@@ -28,13 +28,13 @@ export default async function ProductsPage({
 	);
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between gap-6 p-8 pt-36 md:p-48">
+		<>
 			<ProductList products={products} />
 			<Pagination
 				pageNumber={Number(pageNumber)}
 				numberOfPages={Math.ceil(aggregate / 5)}
 				path="/products/"
 			/>
-		</main>
+		</>
 	);
 }

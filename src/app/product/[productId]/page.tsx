@@ -68,8 +68,8 @@ async function SingleProductPage({
 	}
 
 	return (
-		<main className="">
-			<div className="grid grid-cols-2 gap-12 px-4 py-36 md:px-24 lg:px-48">
+		<div className="flex flex-col gap-12">
+			<div className="grid grid-cols-1 gap-12 md:grid-cols-2">
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />
@@ -78,13 +78,13 @@ async function SingleProductPage({
 					</form>
 				</div>
 			</div>
-			<div className="px-4 md:px-24 lg:px-48 ">
+			<div>
 				<SuggestedProducts
 					productCategorySlug={product.categories[0].slug}
 				/>
 				<FormReview productId={product.id} />
 			</div>
-		</main>
+		</div>
 	);
 }
 

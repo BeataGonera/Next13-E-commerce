@@ -21,15 +21,13 @@ const SortPage = async ({
 	if (!products) notFound();
 	return (
 		<>
-			<main className="flex flex-col items-center p-8 pt-36 md:p-48">
-				<CollectionsSections />
-				<ProductList products={products} />
-				<Pagination
-					pageNumber={Number(params.pageNumber)}
-					numberOfPages={Math.ceil(aggregate / 5)}
-					path={`/sort/`}
-				/>
-			</main>
+			<CollectionsSections />
+			<ProductList products={products} />
+			<Pagination
+				pageNumber={Number(params.pageNumber)}
+				numberOfPages={Math.ceil(aggregate / 5)}
+				path={`/sort/`}
+			/>
 		</>
 	);
 };

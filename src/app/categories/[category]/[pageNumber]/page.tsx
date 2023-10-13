@@ -37,7 +37,7 @@ const CategoryPage = async ({
 	}
 
 	return (
-		<main className="flex min-h-screen flex-col items-center pt-36 sm:px-6 md:px-24 lg:px-48">
+		<>
 			<h1 className="text-slate-950">{categoryFromQuery.name}</h1>
 			<ProductList products={products} />
 			<Pagination
@@ -45,7 +45,7 @@ const CategoryPage = async ({
 				numberOfPages={numberOfPages}
 				path={`/categories/${categoryFromQuery.slug}/`}
 			/>
-		</main>
+		</>
 	);
 };
 

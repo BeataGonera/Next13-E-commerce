@@ -24,7 +24,7 @@ export const SearchInput = () => {
 			<input
 				type="search"
 				id="search"
-				className="z-2 hover w-full rounded-lg bg-slate-50 p-2 text-sm focus:outline-none active:border-none"
+				className="z-2 hover w-full rounded-lg bg-slate-50 p-2 text-sm text-slate-950 focus:outline-none active:border-none"
 				placeholder="Search"
 				required
 				onChange={handleOnChange}

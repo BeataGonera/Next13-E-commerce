@@ -18,7 +18,9 @@ export default async function RootLayout({
 		<html lang="pl">
 			<body className={inter.className}>
 				<Navigation />
-				{children}
+				<main className="flex min-h-screen flex-col items-center p-4 pt-36 md:p-48">
+					{children}
+				</main>
 			</body>
 		</html>
 	);

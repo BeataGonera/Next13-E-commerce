@@ -6,7 +6,7 @@ export const AddToCartButton = () => {
 	const formStatus = useFormStatus();
 
 	return (
-		<div>
+		<div className="flex justify-center md:justify-start">
 			<button
 				type="submit"
 				data-testid="add-to-cart-button"

@@ -7,7 +7,7 @@ export default async function MainPage() {
 	const { products, aggregate } = await getProductsListPaginate(5, 0);
 
 	return (
-		<main className="flex flex-col items-center p-8 pt-36 md:p-48">
+		<>
 			<CollectionsSections />
 			<ProductList products={products} />
 			<Pagination
@@ -15,6 +15,6 @@ export default async function MainPage() {
 				numberOfPages={Math.ceil(aggregate / 5)}
 				path="/products/"
 			/>
-		</main>
+		</>
 	);
 }

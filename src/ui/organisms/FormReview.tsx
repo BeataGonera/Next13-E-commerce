@@ -39,7 +39,7 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 			</h3>
 			<form
 				data-testid="add-review-form"
-				className="flex w-2/4 flex-col gap-2"
+				className="flex w-full flex-col items-center gap-2 md:w-1/2"
 				action={async (productId) => {
 					setOptimisticFormData({
 						title: title,
@@ -53,14 +53,14 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 			>
 				<input
 					onChange={(e) => setTitle(e.currentTarget.value)}
-					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
+					className="h-12 w-full rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="Title"
 					name="headline"
 				/>
 				<input
 					onChange={(e) => setContent(e.currentTarget.value)}
-					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
+					className="h-12 w-full rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="Content"
 					name="content"
@@ -70,7 +70,7 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 					value={rating}
 					name="rating"
 					id="rating"
-					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
+					className="h-12 w-full rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 				>
 					<option value="5">5</option>
 					<option value="4">4</option>
@@ -80,14 +80,14 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 				</select>
 				<input
 					onChange={(e) => setUsername(e.currentTarget.value)}
-					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
+					className="h-12 w-full rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="text"
 					placeholder="User name"
 					name="name"
 				/>
 				<input
 					onChange={(e) => setEmail(e.currentTarget.value)}
-					className="h-12 rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
+					className="h-12 w-full rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 					type="email"
 					placeholder="Email"
 					name="email"
@@ -95,7 +95,7 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 				<button
 					type="submit"
 					disabled={formStatus.pending}
-					className="h-10 w-36 cursor-pointer rounded-sm bg-blue-500 text-slate-50 hover:opacity-90"
+					className="h-10 w-full cursor-pointer rounded-sm bg-blue-500 text-slate-50 hover:opacity-90 md:w-36"
 				>
 					Submit
 				</button>

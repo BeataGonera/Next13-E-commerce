@@ -12,7 +12,7 @@ export const ChangeProductQuantity = ({
 	const [optimisticQuantity, setOptimisticQuantity] =
 		useOptimistic(quantity);
 	return (
-		<form className="flex justify-center gap-4">
+		<form className="flex h-36 items-center justify-center gap-4 md:h-48">
 			<button
 				data-testid="decrement"
 				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"

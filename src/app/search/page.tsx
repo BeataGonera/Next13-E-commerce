@@ -14,7 +14,7 @@ const SearchResults = async ({
 	const products = await getProductsByName(searchParams.query);
 
 	return (
-		<main className="flex flex-col gap-12 px-48 py-12">
+		<>
 			<h2 className="text-lg text-slate-900">
 				Searching for: {searchParams.query}
 			</h2>
@@ -23,7 +23,7 @@ const SearchResults = async ({
 			) : (
 				<h2 className="text-lg text-slate-900">No results</h2>
 			)}
-		</main>
+		</>
 	);
 };
 

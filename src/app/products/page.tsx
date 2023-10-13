@@ -7,13 +7,13 @@ export default async function ProductsPage() {
 	const numberOfPages = Math.ceil(aggregate / 5);
 
 	return (
-		<main className="flex min-h-screen flex-col items-center p-4 pt-36 md:p-48">
+		<>
 			<ProductList products={products} />
 			<Pagination
 				pageNumber={1}
 				numberOfPages={numberOfPages}
 				path="/products/"
 			/>
-		</main>
+		</>
 	);
 }
