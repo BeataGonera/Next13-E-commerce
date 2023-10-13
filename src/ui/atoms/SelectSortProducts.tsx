@@ -8,9 +8,9 @@ import {
 	type Dispatch,
 	type SetStateAction,
 } from "react";
+import { useRouter } from "next/navigation";
 import {
 	type Product,
-	getProductsOrderedByPrice,
 	getProductsOrderedByRating,
 } from "@/api/products";
 
@@ -21,6 +21,7 @@ type SelectSortProductsProps = {
 export const SelectSortProducts: FC<SelectSortProductsProps> = ({
 	setProductsToDisplay,
 }) => {
+	const router = useRouter();
 	const options = [
 		{
 			value: "",
@@ -43,8 +44,7 @@ export const SelectSortProducts: FC<SelectSortProductsProps> = ({
 	);
 
 	const getProductsOrderedByPriceMethod = async () => {
-		const { products } = await getProductsOrderedByPrice(5, 0);
-		setProductsToDisplay(products);
+		router.push(`/sort/1?by=price`);
 	};
 
 	const getProductsOrderedByReatingMethod = async () => {
