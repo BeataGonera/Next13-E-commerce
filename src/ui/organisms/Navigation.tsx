@@ -27,9 +27,12 @@ export const Navigation = async () => {
 	}));
 	const navLinks = [...basicNavLinks, ...categoriesNavLinks];
 	return (
-		<div className="fixed flex h-24 w-screen justify-between border-b-2 bg-white px-6 py-8 md:px-24 lg:px-48">
+		<div className="fixed z-20 flex h-24 w-screen justify-between border-b-2 bg-white px-6 py-8 md:px-24 lg:px-48">
 			<nav className="flex items-center">
-				<button className="flex items-center justify-center text-blue-700 md:hidden">
+				<button
+					className="flex items-center justify-center text-blue-700 md:hidden"
+					aria-label="Menu"
+				>
 					<MenuIcon size={24} color="rgb(59 130 246)" />
 				</button>
 				<ul className="hidden justify-start gap-4 md:flex">
