@@ -71,12 +71,14 @@ export const SelectSortProducts: FC<SelectSortProductsProps> = ({
 			className="self-end"
 			onChange={handleChange}
 			value={selectedValue}
+			aria-label="sort by"
 		>
 			{options.map((option) => (
 				<option
 					key={option.value}
 					value={option.value}
 					data-testid={option.dataTestId}
+					aria-label={option.text}
 				>
 					{option.text}
 				</option>

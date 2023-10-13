@@ -15,7 +15,7 @@ export const CollectionsSections = async () => {
 					>
 						<Image
 							src={collection.image.url}
-							alt={collection.name}
+							alt={`${collection.name} collection`}
 							width={300}
 							height={300}
 							className="h-full w-full rounded-sm text-slate-900"
