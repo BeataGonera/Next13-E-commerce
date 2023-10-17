@@ -30,37 +30,41 @@ export const getCartFromCookie = async () => {
 	}
 };
 
-export const getOrCreateCart =
-	async (): Promise<CartFragmentFragment> => {
-		const cartId = cookies().get("cartId")?.value;
-		if (cartId) {
-			const { order: cart } = await executeGraphQL({
-				query: CartGetByIdDocument,
-				variables: {
-					id: cartId,
-				},
-				cache: "no-store",
-			});
-			if (cart) {
-				return cart;
-			}
-		}
-
-		const { createOrder: newCart } = await executeGraphQL({
-			query: CartCreateDocument,
-			variables: {},
+export const getOrCreateCart = async (
+	total?: number,
+): Promise<CartFragmentFragment> => {
+	const cartId = cookies().get("cartId")?.value;
+	if (cartId) {
+		const { order: cart } = await executeGraphQL({
+			query: CartGetByIdDocument,
+			variables: {
+				id: cartId,
+			},
+			cache: "no-store",
 		});
-		if (!newCart) {
-			throw new Error("Failed to create cart");
+		if (cart) {
+			return cart;
 		}
+	}
 
-		cookies().set("cartId", newCart.id);
-		return { id: newCart.id, orderItems: [] };
-	};
+	if (!total) throw new Error("total order value not found");
+
+	const { createOrder: newCart } = await executeGraphQL({
+		query: CartCreateDocument,
+		variables: { total: total },
+	});
+	if (!newCart) {
+		throw new Error("Failed to create cart");
+	}
+
+	cookies().set("cartId", newCart.id);
+	return { id: newCart.id, orderItems: [] };
+};
 
 export async function addProductToCart(
 	cartId: string,
 	productId: string,
+	total: number,
 ) {
 	const product = await executeGraphQL({
 		query: ProductGetByIdDocument,
@@ -77,7 +81,7 @@ export async function addProductToCart(
 		variables: {
 			orderId: cartId,
 			productId: productId,
-			total: 1,
+			total: total,
 		},
 	});
 }
@@ -85,12 +89,14 @@ export async function addProductToCart(
 export const setProductQuantity = async (
 	itemId: string,
 	quantity: number,
+	total: number,
 ) => {
 	await executeGraphQL({
 		query: CartSetProductQuantityDocument,
 		variables: {
 			id: itemId,
 			quantity: quantity,
+			total: total,
 		},
 		cache: "no-store",
 	});

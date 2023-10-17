@@ -10724,7 +10724,9 @@ export type CartAddProductMutationVariables = Exact<{
 
 export type CartAddProductMutation = { createOrderItem?: { id: string } | null };
 
-export type CartCreateMutationVariables = Exact<{ [key: string]: never; }>;
+export type CartCreateMutationVariables = Exact<{
+  total: Scalars['Int']['input'];
+}>;
 
 
 export type CartCreateMutation = { createOrder?: { id: string } | null };
@@ -10748,10 +10750,11 @@ export type CartRemoveProductMutation = { deleteOrderItem?: { id: string } | nul
 export type CartSetProductQuantityMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   quantity: Scalars['Int']['input'];
+  total: Scalars['Int']['input'];
 }>;
 
 
-export type CartSetProductQuantityMutation = { updateOrderItem?: { id: string } | null };
+export type CartSetProductQuantityMutation = { updateOrderItem?: { id: string, total: number } | null };
 
 export type CategoriesGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10956,8 +10959,8 @@ export const CartAddProductDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<CartAddProductMutation, CartAddProductMutationVariables>;
 export const CartCreateDocument = new TypedDocumentString(`
-    mutation CartCreate {
-  createOrder(data: {total: 0}) {
+    mutation CartCreate($total: Int!) {
+  createOrder(data: {total: $total}) {
     id
   }
 }
@@ -11010,9 +11013,10 @@ export const CartRemoveProductDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<CartRemoveProductMutation, CartRemoveProductMutationVariables>;
 export const CartSetProductQuantityDocument = new TypedDocumentString(`
-    mutation cartSetProductQuantity($id: ID!, $quantity: Int!) {
-  updateOrderItem(where: {id: $id}, data: {quantity: $quantity}) {
+    mutation cartSetProductQuantity($id: ID!, $quantity: Int!, $total: Int!) {
+  updateOrderItem(where: {id: $id}, data: {quantity: $quantity, total: $total}) {
     id
+    total
   }
 }
     `) as unknown as TypedDocumentString<CartSetProductQuantityMutation, CartSetProductQuantityMutationVariables>;

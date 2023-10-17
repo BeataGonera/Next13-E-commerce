@@ -36,6 +36,7 @@ const CartPage = async () => {
 								<th>Product</th>
 								<th>Quantity</th>
 								<th>Price</th>
+								<th>Total</th>
 							</tr>
 						</tbody>
 						<tbody>
@@ -59,12 +60,15 @@ const CartPage = async () => {
 										<ChangeProductQuantity
 											itemId={item.id}
 											quantity={item.quantity}
+											total={item.total}
+											productPrice={item.product?.price as number}
 										/>
 										<RemoveButton itemId={item.id} />
 									</td>
 									{item.product && (
 										<td>{formatMoney(item.product.price / 100)}</td>
 									)}
+									<td>{formatMoney(item.total / 100)}</td>
 								</tr>
 							))}
 						</tbody>

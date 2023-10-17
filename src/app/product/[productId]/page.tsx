@@ -47,7 +47,7 @@ async function SingleProductPage({
 
 	async function addToCartAction() {
 		"use server";
-		const cart = await getOrCreateCart();
+		const cart = await getOrCreateCart(product.price);
 		console.log(productId);
 
 		const existingProduct = cart.orderItems.find(
@@ -56,12 +56,15 @@ async function SingleProductPage({
 		);
 
 		if (existingProduct) {
+			const newPrice = (existingProduct.total += existingProduct // jako total pobiera cenę jednostkową
+				.product?.price as number);
 			await setProductQuantity(
 				existingProduct.id,
 				existingProduct.quantity + 1,
+				newPrice,
 			);
 		} else {
-			await addProductToCart(cart.id, product.id);
+			await addProductToCart(cart.id, product.id, product.price);
 		}
 
 		revalidateTag("cart");

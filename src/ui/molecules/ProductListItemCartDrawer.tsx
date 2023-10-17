@@ -22,7 +22,7 @@ export const ProductListItemCartDrawer = ({
 					{product.product?.name}
 				</p>
 				<p className="text-sm text-slate-50">
-					{formatMoney((product.product?.price as number) / 100)}
+					{formatMoney(product.total / 100)}
 				</p>
 
 				<button className="text-start text-sm uppercase text-slate-400">

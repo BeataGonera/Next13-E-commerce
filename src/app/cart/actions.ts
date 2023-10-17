@@ -17,8 +17,9 @@ export const removeItemFromCartAction = async (itemId: string) => {
 export const changeItemQuantity = async (
 	itemId: string,
 	quantity: number,
+	total: number,
 ) => {
-	await setProductQuantity(itemId, quantity);
+	await setProductQuantity(itemId, quantity, total);
 };
 
 export const submitReviewAction = async (
