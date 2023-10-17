@@ -60,8 +60,6 @@ const CartPage = async () => {
 										<ChangeProductQuantity
 											itemId={item.id}
 											quantity={item.quantity}
-											total={item.total}
-											productPrice={item.product?.price as number}
 										/>
 										<RemoveButton itemId={item.id} />
 									</td>
@@ -73,6 +71,10 @@ const CartPage = async () => {
 							))}
 						</tbody>
 					</table>
+
+					<p className="text-slate-950">
+						Total: {formatMoney(cart.total / 100)}
+					</p>
 
 					<form
 						action={paymentAction}

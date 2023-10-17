@@ -9,6 +9,7 @@ import {
 	CartRemoveProductDocument,
 	CartSetProductQuantityDocument,
 	ProductGetByIdDocument,
+	type OrderItemFragmentFragment,
 } from "@/gql/graphql";
 
 export const getCartFromCookie = async () => {
@@ -30,41 +31,37 @@ export const getCartFromCookie = async () => {
 	}
 };
 
-export const getOrCreateCart = async (
-	total?: number,
-): Promise<CartFragmentFragment> => {
-	const cartId = cookies().get("cartId")?.value;
-	if (cartId) {
-		const { order: cart } = await executeGraphQL({
-			query: CartGetByIdDocument,
-			variables: {
-				id: cartId,
-			},
-			cache: "no-store",
-		});
-		if (cart) {
-			return cart;
+export const getOrCreateCart =
+	async (): Promise<CartFragmentFragment> => {
+		const cartId = cookies().get("cartId")?.value;
+		if (cartId) {
+			const { order: cart } = await executeGraphQL({
+				query: CartGetByIdDocument,
+				variables: {
+					id: cartId,
+				},
+				cache: "no-store",
+			});
+			if (cart) {
+				return cart;
+			}
 		}
-	}
 
-	if (!total) throw new Error("total order value not found");
+		const { createOrder: newCart } = await executeGraphQL({
+			query: CartCreateDocument,
+			variables: {},
+		});
+		if (!newCart) {
+			throw new Error("Failed to create cart");
+		}
 
-	const { createOrder: newCart } = await executeGraphQL({
-		query: CartCreateDocument,
-		variables: { total: total },
-	});
-	if (!newCart) {
-		throw new Error("Failed to create cart");
-	}
-
-	cookies().set("cartId", newCart.id);
-	return { id: newCart.id, orderItems: [] };
-};
+		cookies().set("cartId", newCart.id);
+		return { id: newCart.id, orderItems: [], total: 0 };
+	};
 
 export async function addProductToCart(
 	cartId: string,
 	productId: string,
-	total: number,
 ) {
 	const product = await executeGraphQL({
 		query: ProductGetByIdDocument,
@@ -75,7 +72,7 @@ export async function addProductToCart(
 	});
 	if (!product)
 		throw new Error(`Product with id ${productId} not found`);
-
+	const total = product.product?.price as number;
 	await executeGraphQL({
 		query: CartAddProductDocument,
 		variables: {
@@ -89,14 +86,19 @@ export async function addProductToCart(
 export const setProductQuantity = async (
 	itemId: string,
 	quantity: number,
-	total: number,
 ) => {
+	const cart = await getCartFromCookie();
+
+	if (!cart) throw new Error("cart not found");
+
+	const toPay = addTotalPricesOfOrderItems(cart.orderItems) as number;
 	await executeGraphQL({
 		query: CartSetProductQuantityDocument,
 		variables: {
 			id: itemId,
 			quantity: quantity,
-			total: total,
+			cartId: cart.id,
+			toPay,
 		},
 		cache: "no-store",
 	});
@@ -109,4 +111,17 @@ export const removeProductFromCart = async (itemId: string) => {
 		variables: { itemId: itemId },
 		cache: "no-store",
 	});
+};
+
+const add = (total: number, num: number) => {
+	return total + num;
+};
+const addTotalPricesOfOrderItems = (
+	orderItems: OrderItemFragmentFragment[],
+) => {
+	if (!orderItems.length) return;
+	const toPay = orderItems
+		.map((orderItem) => orderItem.total)
+		.reduce(add, 0);
+	return toPay;
 };

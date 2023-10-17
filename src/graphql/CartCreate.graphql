@@ -1,5 +1,5 @@
-mutation CartCreate($total: Int!) {
-	createOrder(data: { total: $total }) {
+mutation CartCreate {
+	createOrder(data: { total: 0 }) {
 		id
 	}
 }

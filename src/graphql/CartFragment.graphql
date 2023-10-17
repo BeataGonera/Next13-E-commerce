@@ -1,5 +1,6 @@
 fragment CartFragment on Order {
 	id
+	total
 	orderItems {
 		...OrderItemFragment
 	}
