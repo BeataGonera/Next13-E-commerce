@@ -20,7 +20,7 @@ export const VariantSelect: FC<VariantSelectProps> = async ({
 	)) as Variant[];
 	return (
 		<>
-			{variants[0] ? (
+			{variants[0] && variants[0].name ? (
 				<div className="mt-4 flex flex-col gap-2 text-sm text-slate-950">
 					<select
 						id="variants"
