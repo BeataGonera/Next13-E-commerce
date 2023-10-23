@@ -12,7 +12,7 @@ export const AddToCartButton = () => {
 				type="submit"
 				data-testid="add-to-cart-button"
 				disabled={formStatus.pending}
-				className="mt-4 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 disabled:cursor-wait disabled:bg-slate-300"
+				className="mt-4 w-full rounded bg-blue-500 px-4 py-2 text-white hover:opacity-80 disabled:cursor-wait disabled:bg-slate-300 md:w-48"
 				onClick={() => setIsCartDrawerOpen(true)}
 			>
 				Add to cart

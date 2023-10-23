@@ -33,11 +33,6 @@ export const SelectSortProducts: FC<SelectSortProductsProps> = ({
 			text: "price",
 			dataTestId: "sort-by-price",
 		},
-		{
-			value: "sort-by-rating",
-			text: "rating",
-			dataTestId: "sort-by-rating",
-		},
 	];
 	const [selectedValue, setSelectedValue] = useState(
 		options[0].value,

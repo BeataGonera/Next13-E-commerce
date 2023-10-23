@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { formatMoney } from "../utils";
+import { ChangeProductQuantityCartDrawer } from "../atoms/ChangeProductQuantityCartDrawer";
 import type { OrderItemFragmentFragment } from "@/gql/graphql";
 
 export const ProductListItemCartDrawer = ({
@@ -8,7 +9,7 @@ export const ProductListItemCartDrawer = ({
 	product: OrderItemFragmentFragment;
 }) => {
 	return (
-		<article className="flex gap-4 border-b-2 border-slate-800 py-4">
+		<article className="flex w-full gap-12 border-b-2 border-slate-800 py-4">
 			<div className="h-24 w-24 rounded-sm bg-slate-50">
 				<Image
 					src={product.product?.images[0].url as string}
@@ -25,9 +26,15 @@ export const ProductListItemCartDrawer = ({
 					{formatMoney(product.total / 100)}
 				</p>
 
-				<button className="text-start text-sm uppercase text-slate-400">
-					Remove
-				</button>
+				<div className="flex w-3/4 justify-between gap-8">
+					<button className="text-start text-sm uppercase text-slate-400 hover:text-slate-200">
+						Remove
+					</button>
+					<ChangeProductQuantityCartDrawer
+						itemId={product.id}
+						quantity={product.quantity}
+					/>
+				</div>
 			</div>
 		</article>
 	);

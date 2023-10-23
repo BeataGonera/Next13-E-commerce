@@ -2,7 +2,7 @@
 import { experimental_useOptimistic as useOptimistic } from "react";
 import { changeItemQuantity } from "@/app/cart/actions";
 
-export const ChangeProductQuantity = ({
+export const ChangeProductQuantityCartDrawer = ({
 	itemId,
 	quantity,
 }: {
@@ -13,7 +13,7 @@ export const ChangeProductQuantity = ({
 		useOptimistic(quantity);
 
 	return (
-		<form className="flex h-36 items-center justify-center gap-4 md:h-48">
+		<form className="flex items-center justify-center gap-4">
 			<button
 				data-testid="decrement"
 				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"
@@ -25,7 +25,9 @@ export const ChangeProductQuantity = ({
 			>
 				-
 			</button>
-			<div data-testid="quantity">{optimisticQuantity}</div>
+			<div data-testid="quantity" className="text-slate-50">
+				{optimisticQuantity}
+			</div>
 			<button
 				data-testid="increment"
 				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"

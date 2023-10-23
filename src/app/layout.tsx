@@ -25,7 +25,6 @@ export default async function RootLayout({
 					{children}
 				</main>
 				{cart && <CartDrawer cart={cart} />}
-				<pre>{JSON.stringify(cart)}</pre>
 			</body>
 		</html>
 	);

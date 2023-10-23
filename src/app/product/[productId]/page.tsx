@@ -12,6 +12,7 @@ import {
 import { FormReview } from "@/ui/organisms/FormReview";
 import type { OrderItemFragmentFragment } from "@/gql/graphql";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
+import { VariantSelect } from "@/ui/organisms/VariantSelect";
 
 export const generateMetadata = async ({
 	params,
@@ -68,11 +69,12 @@ async function SingleProductPage({
 	}
 
 	return (
-		<div className="flex flex-col gap-12">
+		<div className="flex w-full flex-col gap-12">
 			<div className="grid grid-cols-1 gap-12 md:grid-cols-2">
 				<ProductImage product={product} />
 				<div>
 					<ProductDescription product={product} />
+					<VariantSelect productId={product.id} />
 					<form action={addToCartAction}>
 						<AddToCartButton />
 					</form>
