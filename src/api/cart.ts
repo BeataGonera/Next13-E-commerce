@@ -74,6 +74,7 @@ export async function addProductToCart(
 	if (!product)
 		throw new Error(`Product with id ${productId} not found`);
 	const total = product.product?.price as number;
+	console.log(total);
 	await executeGraphQL({
 		query: CartAddProductDocument,
 		variables: {
@@ -81,7 +82,10 @@ export async function addProductToCart(
 			productId: productId,
 			total: total,
 		},
+		cache: "no-store",
 	});
+
+	await updateTotalOrderValue();
 }
 
 const findExistingProduct = async (
@@ -151,6 +155,7 @@ export const removeProductFromCart = async (itemId: string) => {
 		variables: { itemId: itemId },
 		cache: "no-store",
 	});
+	await updateTotalOrderValue();
 };
 
 const add = (total: number, num: number) => {
@@ -159,7 +164,7 @@ const add = (total: number, num: number) => {
 const countTotalOrderValue = (
 	orderItems: OrderItemFragmentFragment[],
 ) => {
-	if (!orderItems.length) return;
+	if (!orderItems.length) return 0;
 	const toPay = orderItems
 		.map((orderItem) => orderItem.total)
 		.reduce(add, 0);

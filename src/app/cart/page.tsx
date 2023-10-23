@@ -27,7 +27,7 @@ const CartPage = async () => {
 
 	return (
 		<>
-			{cart ? (
+			{cart && cart.orderItems.length ? (
 				<div className="flex w-full flex-col gap-8 md:w-3/4">
 					<table>
 						<tbody>
