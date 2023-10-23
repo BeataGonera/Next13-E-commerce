@@ -135,9 +135,7 @@ export const setProductQuantity = async (
 const updateTotalOrderValue = async () => {
 	const cart = await getCartFromCookie();
 	if (!cart) throw new Error("cart not found");
-	const totalOrderValue = countTotalOrderValue(
-		cart.orderItems,
-	) as number;
+	const totalOrderValue = countTotalOrderValue(cart.orderItems);
 	await executeGraphQL({
 		query: CartUpdateTotalOrderValueDocument,
 		variables: {
