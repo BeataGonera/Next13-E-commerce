@@ -10,6 +10,7 @@ import {
 	CartSetProductQuantityDocument,
 	ProductGetByIdDocument,
 	type OrderItemFragmentFragment,
+	CartUpdateTotalOrderValueDocument,
 } from "@/gql/graphql";
 
 export const getCartFromCookie = async () => {
@@ -83,22 +84,61 @@ export async function addProductToCart(
 	});
 }
 
+const findExistingProduct = async (
+	itemId: string,
+	cart: CartFragmentFragment,
+) => {
+	return cart.orderItems.find((orderItem) => orderItem.id === itemId);
+};
+
+const countNewTotalPriceOfOrderItem = async (
+	existingProduct: OrderItemFragmentFragment,
+	quantity: number,
+) => {
+	const newTotalPriceOfOrderItem =
+		(existingProduct.product?.price as number) * quantity;
+	return newTotalPriceOfOrderItem;
+};
+
 export const setProductQuantity = async (
 	itemId: string,
 	quantity: number,
 ) => {
 	const cart = await getCartFromCookie();
-
 	if (!cart) throw new Error("cart not found");
 
-	const toPay = addTotalPricesOfOrderItems(cart.orderItems) as number;
+	const existingProduct = await findExistingProduct(itemId, cart);
+	if (!existingProduct) return;
+
+	const newTotalPriceOfOrderItem =
+		await countNewTotalPriceOfOrderItem(existingProduct, quantity);
+
 	await executeGraphQL({
 		query: CartSetProductQuantityDocument,
 		variables: {
 			id: itemId,
 			quantity: quantity,
+			newPrice: newTotalPriceOfOrderItem,
 			cartId: cart.id,
-			toPay,
+		},
+		cache: "no-store",
+	});
+	revalidatePath("/cart");
+
+	await updateTotalOrderValue();
+};
+
+const updateTotalOrderValue = async () => {
+	const cart = await getCartFromCookie();
+	if (!cart) throw new Error("cart not found");
+	const totalOrderValue = countTotalOrderValue(
+		cart.orderItems,
+	) as number;
+	await executeGraphQL({
+		query: CartUpdateTotalOrderValueDocument,
+		variables: {
+			cartId: cart.id,
+			total: totalOrderValue,
 		},
 		cache: "no-store",
 	});
@@ -116,7 +156,7 @@ export const removeProductFromCart = async (itemId: string) => {
 const add = (total: number, num: number) => {
 	return total + num;
 };
-const addTotalPricesOfOrderItems = (
+const countTotalOrderValue = (
 	orderItems: OrderItemFragmentFragment[],
 ) => {
 	if (!orderItems.length) return;

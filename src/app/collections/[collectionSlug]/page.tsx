@@ -36,7 +36,7 @@ const CollectionPage = async ({
 	}
 
 	return (
-		<main className="flex flex-col items-center justify-between gap-12 pt-36 sm:px-6 md:px-24 lg:px-48">
+		<>
 			<h1 className="text-xl font-semibold text-slate-800">
 				{collectionName}
 			</h1>
@@ -46,7 +46,7 @@ const CollectionPage = async ({
 				pageNumber={0}
 				numberOfPages={Math.ceil(aggregate / 5)}
 			/>
-		</main>
+		</>
 	);
 };
 

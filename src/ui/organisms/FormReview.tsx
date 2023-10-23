@@ -72,11 +72,11 @@ export const FormReview: FC<FormReviewProps> = ({ productId }) => {
 					id="rating"
 					className="h-12 w-full rounded-sm border-2 border-solid border-slate-100 bg-slate-50 pl-4"
 				>
-					<option value="5">5</option>
-					<option value="4">4</option>
-					<option value="3">3</option>
-					<option value="2">2</option>
-					<option value="1">1</option>
+					<option value="5">Excelent!</option>
+					<option value="4">Very good</option>
+					<option value="3">Good</option>
+					<option value="2">Average</option>
+					<option value="1">Bad</option>
 				</select>
 				<input
 					onChange={(e) => setUsername(e.currentTarget.value)}

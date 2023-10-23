@@ -1,13 +1,12 @@
 mutation cartSetProductQuantity(
 	$id: ID!
 	$quantity: Int!
-	$cartId: ID!
-	$toPay: Int!
+	$newPrice: Int!
 ) {
-	updateOrder(where: { id: $cartId }, data: { total: $toPay }) {
-		id
-	}
-	updateOrderItem(where: { id: $id }, data: { quantity: $quantity }) {
+	updateOrderItem(
+		where: { id: $id }
+		data: { quantity: $quantity, total: $newPrice }
+	) {
 		id
 		total
 	}
