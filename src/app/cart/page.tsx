@@ -61,7 +61,7 @@ const CartPage = async () => {
 											itemId={item.id}
 											quantity={item.quantity}
 										/>
-										<RemoveButton itemId={item.id} />
+										<RemoveButton itemId={item.id} color={"black"} />
 									</td>
 									{item.product && (
 										<td>{formatMoney(item.product.price / 100)}</td>

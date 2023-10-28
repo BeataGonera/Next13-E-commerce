@@ -6,9 +6,13 @@ import { removeItemFromCartAction } from "@/app/cart/actions";
 
 type RemoveButtonProps = {
 	itemId: string;
+	color: string;
 };
 
-export const RemoveButton: FC<RemoveButtonProps> = ({ itemId }) => {
+export const RemoveButton: FC<RemoveButtonProps> = ({
+	itemId,
+	color,
+}) => {
 	const [isPending, startTransition] = useTransition();
 	const router = useRouter();
 	return (
@@ -22,7 +26,7 @@ export const RemoveButton: FC<RemoveButtonProps> = ({ itemId }) => {
 				});
 			}}
 		>
-			<BinIcon size={18} color={"red"} />
+			<BinIcon size={18} color={color} />
 		</button>
 	);
 };

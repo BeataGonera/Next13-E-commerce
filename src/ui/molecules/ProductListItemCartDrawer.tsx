@@ -2,6 +2,7 @@ import Image from "next/image";
 import { formatMoney } from "../utils";
 import { ChangeProductQuantityCartDrawer } from "../atoms/ChangeProductQuantityCartDrawer";
 import type { OrderItemFragmentFragment } from "@/gql/graphql";
+import { RemoveButton } from "../atoms/RemoveButton";
 
 export const ProductListItemCartDrawer = ({
 	product,
@@ -27,9 +28,7 @@ export const ProductListItemCartDrawer = ({
 				</p>
 
 				<div className="flex w-3/4 justify-between gap-8">
-					<button className="text-start text-sm uppercase text-slate-400 hover:text-slate-200">
-						Remove
-					</button>
+					<RemoveButton itemId={product.id} color={"white"} />
 					<ChangeProductQuantityCartDrawer
 						itemId={product.id}
 						quantity={product.quantity}
