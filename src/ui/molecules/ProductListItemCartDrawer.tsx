@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { formatMoney } from "../utils";
 import { ChangeProductQuantityCartDrawer } from "../atoms/ChangeProductQuantityCartDrawer";
-import type { OrderItemFragmentFragment } from "@/gql/graphql";
 import { RemoveButton } from "../atoms/RemoveButton";
+import type { OrderItemFragmentFragment } from "@/gql/graphql";
 
 export const ProductListItemCartDrawer = ({
 	product,
