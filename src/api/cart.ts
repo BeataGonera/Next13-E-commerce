@@ -127,9 +127,8 @@ export const setProductQuantity = async (
 		},
 		cache: "no-store",
 	});
-	revalidatePath("/cart");
-
 	await updateTotalOrderValue();
+	revalidatePath("/cart");
 };
 
 const updateTotalOrderValue = async () => {

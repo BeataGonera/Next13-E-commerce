@@ -1,5 +1,7 @@
 "use client";
 import { experimental_useOptimistic as useOptimistic } from "react";
+import { ButtonDecrementProductQuantity } from "./ButtonDecrementProductQuantity";
+import { ButtonIncrementProductQuantity } from "./ButtonIncrementProductQuantity";
 import { changeItemQuantity } from "@/app/cart/actions";
 
 export const ChangeProductQuantity = ({
@@ -13,29 +15,25 @@ export const ChangeProductQuantity = ({
 		useOptimistic(quantity);
 
 	return (
-		<form className="flex h-36 items-center justify-center gap-4 md:h-48">
-			<button
-				data-testid="decrement"
-				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"
-				formAction={async () => {
+		<div className="flex h-36 items-center justify-center gap-4 md:h-48">
+			<form
+				action={async () => {
 					if (optimisticQuantity <= 1) return;
 					setOptimisticQuantity(optimisticQuantity - 1);
 					await changeItemQuantity(itemId, optimisticQuantity - 1);
 				}}
 			>
-				-
-			</button>
+				<ButtonDecrementProductQuantity />
+			</form>
 			<div data-testid="quantity">{optimisticQuantity}</div>
-			<button
-				data-testid="increment"
-				className="flex h-8 w-8 items-center justify-center rounded-sm bg-slate-300 hover:opacity-90"
-				formAction={async () => {
+			<form
+				action={async () => {
 					setOptimisticQuantity(optimisticQuantity + 1);
 					await changeItemQuantity(itemId, optimisticQuantity + 1);
 				}}
 			>
-				+
-			</button>
-		</form>
+				<ButtonIncrementProductQuantity />
+			</form>
+		</div>
 	);
 };
