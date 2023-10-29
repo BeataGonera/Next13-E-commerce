@@ -1,5 +1,4 @@
 import type { TypedDocumentString } from "@/gql/graphql";
-import { error } from "console";
 
 type GraphQLResponse<T> =
 	| {
