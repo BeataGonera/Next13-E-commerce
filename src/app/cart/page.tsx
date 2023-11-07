@@ -71,11 +71,6 @@ const CartPage = async () => {
 							))}
 						</tbody>
 					</table>
-
-					<p className="text-slate-950">
-						Total: {formatMoney(cart.total / 100)}
-					</p>
-
 					<form
 						action={paymentAction}
 						className="flex justify-center"

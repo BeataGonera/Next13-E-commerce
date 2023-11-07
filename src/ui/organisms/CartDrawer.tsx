@@ -39,9 +39,6 @@ export const CartDrawer: FC<CartDrawerProps> = ({ cart }) => {
 					<div>Your cart is empty</div>
 				)}
 				<div className="flex flex-col gap-4">
-					<p className="text-xl text-slate-50">
-						Total: {formatMoney(cart.total / 100)}
-					</p>
 					<button className="h-12 w-full bg-slate-100 text-lg hover:bg-slate-50">
 						Pay
 					</button>
