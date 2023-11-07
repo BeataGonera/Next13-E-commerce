@@ -3,7 +3,6 @@
 import { type FC } from "react";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { ProductListItemCartDrawer } from "../molecules/ProductListItemCartDrawer";
-import { formatMoney } from "../utils";
 import { type CartFragmentFragment } from "@/gql/graphql";
 import { useIsCartDrawerOpenStore } from "@/state/isCartDrawerOpen";
 
